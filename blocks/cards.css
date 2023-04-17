@@ -7,11 +7,12 @@
   margin: auto;
 }
 
-.card__element {
+.card {
   display: flex;
   flex-wrap: wrap;
   width: 282px;
   height: 361px;
+  /* padding: 0; */
 }
 
 .card__image {
@@ -20,7 +21,7 @@
   border-radius: 10px 10px 0 0;
 }
 
-.card__title-container {
+.card__wrapper {
   box-sizing: border-box;
   width: 100%;
   display: flex;
