@@ -1,14 +1,15 @@
 .header {
   margin-top: 45px;
   max-width: 880px;
-  border-bottom: 1px solid #545454;
+  border-bottom: 1px solid rgba(84, 84, 84, 0.7);
 }
 
 .header__logo {
   padding-bottom: 41px;
 }
 
-@media screen and (min-width: 580px) and (max-width: 900px) {
+@media screen and (min-width: 580px) and (max-width: 900px),
+  screen and (min-width: 320px) and (max-width: 580px) {
   .header__logo {
     width: 126px;
     height: 24px;
@@ -17,9 +18,11 @@
 }
 
 @media screen and (min-width: 320px) and (max-width: 580px) {
+  .header {
+    margin-top: 28px;
+  }
+
   .header__logo {
-    width: 126px;
-    height: 24px;
-    margin-left: 27px;
+    padding-bottom: 32px;
   }
 }

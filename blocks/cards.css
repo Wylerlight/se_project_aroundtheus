@@ -7,67 +7,8 @@
   margin: auto;
 }
 
-.card {
-  display: flex;
-  flex-wrap: wrap;
-  width: 282px;
-  height: 361px;
-  /* padding: 0; */
-}
-
-.card__image {
-  width: 282px;
-  height: 282px;
-  border-radius: 10px 10px 0 0;
-}
-
-.card__wrapper {
-  box-sizing: border-box;
-  width: 100%;
-  display: flex;
-  background-color: #fff;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 0 0 10px 10px;
-  padding: 25px 20px;
-}
-
-.card__title {
-  color: #000;
-  font-family: "Inter", Arial, Helvetica, sans-serif;
-  font-style: normal;
-  font-weight: 900;
-  font-size: 24px;
-  line-height: 29px;
-  margin: 0;
-  max-width: 210px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-.card__button {
-  background: transparent url(../images/heart.svg) center no-repeat;
-  width: 21px;
-  height: 18px;
-  border: none;
-  padding: 0;
-  transition: 0.5s;
-}
-
-.card__button:hover {
-  opacity: 50%;
-  cursor: pointer;
-}
-
-@media screen and (min-width: 580px) and (max-width: 900px) {
-  .cards {
-    justify-content: center;
-    padding-top: 36px;
-  }
-}
-
-@media screen and (min-width: 320px) and (max-width: 580px) {
+@media screen and (min-width: 580px) and (max-width: 900px),
+  screen and (min-width: 320px) and (max-width: 580px) {
   .cards {
     justify-content: center;
     padding-top: 36px;
