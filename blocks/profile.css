@@ -1,0 +1,60 @@
+.profile {
+  display: flex;
+  align-items: center;
+  padding-top: 40px;
+}
+
+.profile__info {
+  display: grid;
+  grid-template-areas:
+    "title button"
+    "description description";
+  grid-template-columns: minmax(auto, 373px) auto;
+  gap: 7px 18px;
+}
+
+.profile__avatar {
+  border-radius: 50%;
+  height: 120px;
+  width: 120px;
+  align-self: center;
+  margin-right: 30px;
+}
+
+.profile__title {
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 42px;
+  line-height: 48px;
+  grid-area: title;
+  margin: 0;
+}
+
+.profile__button-edit {
+  background: transparent url(../images/pencil.svg) center no-repeat;
+  width: 24px;
+  height: 24px;
+  grid-area: button;
+  align-self: center;
+  border: 1px solid #ffffff;
+}
+
+.profile__description {
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  grid-area: description;
+  margin: 0;
+}
+
+.profile__button-add {
+  background: transparent url(../images/plus-sign.svg) center no-repeat;
+  width: 150px;
+  height: 50px;
+  margin-left: auto;
+  border: 2px solid #ffffff;
+  border-radius: 2px;
+}
