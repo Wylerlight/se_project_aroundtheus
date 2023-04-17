@@ -21,7 +21,8 @@
 }
 
 .card__title-container {
-  width: 282px;
+  box-sizing: border-box;
+  width: 100%;
   display: flex;
   background-color: #fff;
   justify-content: space-between;

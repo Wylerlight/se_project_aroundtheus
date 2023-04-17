@@ -38,6 +38,12 @@
   grid-area: button;
   align-self: center;
   border: 1px solid #ffffff;
+  transition: 0.5s;
+}
+
+.profile__button-edit:hover {
+  cursor: pointer;
+  opacity: 50%;
 }
 
 .profile__description {
@@ -57,4 +63,10 @@
   margin-left: auto;
   border: 2px solid #ffffff;
   border-radius: 2px;
+  transition: 0.5s;
+}
+
+.profile__button-add:hover {
+  cursor: pointer;
+  opacity: 50%;
 }
