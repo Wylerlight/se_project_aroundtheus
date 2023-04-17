@@ -59,3 +59,17 @@
   opacity: 50%;
   cursor: pointer;
 }
+
+@media screen and (min-width: 580px) and (max-width: 900px) {
+  .cards {
+    justify-content: center;
+    padding-top: 36px;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 580px) {
+  .cards {
+    justify-content: center;
+    padding-top: 36px;
+  }
+}
