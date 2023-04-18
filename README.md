@@ -18,4 +18,4 @@ This project is made utilizing design specs on Figma, new grid layout properties
 
 Please see below for a link to this project's GitHub:
 
-- [Link to the GitHub project](https://github.com/Wylerlight/se_project_aroundtheus)
+- [Link to the GitHub project](https://wylerlight.github.io/se_project_aroundtheus/)
