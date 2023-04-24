@@ -131,6 +131,6 @@
   }
 }
 
-.hidden {
+.modal_opened {
   display: none;
 }
