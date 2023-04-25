@@ -28,7 +28,7 @@ const initialCards = [
 //////// Dom Manipulation ////////
 
 /* Elements */
-const profilePopup = document.querySelector(".modal_opened");
+const profilePopup = document.querySelector(".profile-modal");
 const profileEditButton = document.querySelector(".profile__button-edit");
 const modalExitButton = document.querySelector(".modal__exit");
 
@@ -51,11 +51,11 @@ const openModal = function () {
   titleInput.value = profileTitle.textContent;
   jobInput.value = profileJob.textContent;
 
-  profilePopup.classList.remove("modal_opened");
+  profilePopup.classList.add("modal_opened");
 };
 
 const closeModal = function () {
-  profilePopup.classList.add("modal_opened");
+  profilePopup.classList.remove("modal_opened");
 };
 
 function handleProfileFormSubmit(evt) {
