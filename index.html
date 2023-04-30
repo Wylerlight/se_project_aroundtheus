@@ -104,24 +104,26 @@
     <!-- EDIT MODAL -->
     <div class="modal profile-modal">
       <section class="modal__container profile-container">
-        <button class="modal__exit"></button>
+        <button class="modal__exit" type="button"></button>
         <h2 class="modal__title">Edit profile</h2>
         <form class="modal__input profile-input">
           <input
             id="modal-description-name"
-            class="modal__description"
+            class="modal__field"
             name="title"
             type="text"
             placeholder="Name"
+            required
           />
           <input
             id="modal-description-job"
-            class="modal__description"
+            class="modal__field"
             name="job"
             type="text"
             placeholder="Description"
+            required
           />
-          <button class="modal__button">Save</button>
+          <button class="modal__button" type="#">Save</button>
         </form>
       </section>
     </div>
@@ -129,24 +131,24 @@
     <!-- ADD CARD MODAL -->
     <div class="modal card-modal">
       <section class="modal__container card-container">
-        <button class="modal__exit"></button>
+        <button class="modal__exit" type="button"></button>
         <h2 class="modal__title">New place</h2>
         <form class="modal__input card-input">
           <input
             id="modal-description-title"
-            class="modal__description"
+            class="modal__field"
             name="title"
             type="text"
             placeholder="Title"
           />
           <input
             id="modal-description-url"
-            class="modal__description"
-            name="job"
-            type="text"
+            class="modal__field"
+            name="url"
+            type="url"
             placeholder="Image link"
           />
-          <button class="modal__button">Create</button>
+          <button class="modal__button" type="#">Create</button>
         </form>
       </section>
     </div>
@@ -170,6 +172,6 @@
         </div>
       </article>
     </template>
-    <script src="./scripts/index.js"></script>
+    <script src="./scripts/index.js" defer></script>
   </body>
 </html>
