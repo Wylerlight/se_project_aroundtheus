@@ -101,11 +101,12 @@
       </main>
     </div>
 
+    <!-- EDIT MODAL -->
     <div class="modal profile-modal">
-      <section class="modal__container">
+      <section class="modal__container profile-container">
         <button class="modal__exit"></button>
         <h2 class="modal__title">Edit profile</h2>
-        <form class="modal__input">
+        <form class="modal__input profile-input">
           <input
             id="modal-description-name"
             class="modal__description"
@@ -125,8 +126,43 @@
       </section>
     </div>
 
+    <!-- ADD CARD MODAL -->
+    <div class="modal card-modal">
+      <section class="modal__container card-container">
+        <button class="modal__exit"></button>
+        <h2 class="modal__title">New place</h2>
+        <form class="modal__input card-input">
+          <input
+            id="modal-description-title"
+            class="modal__description"
+            name="title"
+            type="text"
+            placeholder="Title"
+          />
+          <input
+            id="modal-description-url"
+            class="modal__description"
+            name="job"
+            type="text"
+            placeholder="Image link"
+          />
+          <button class="modal__button">Create</button>
+        </form>
+      </section>
+    </div>
+
+    <!-- Image Popup -->
+    <div class="image">
+      <section class="image__container">
+        <button class="image__exit"></button>
+        <img class="image__main" src="" alt="" />
+        <p class="image__description"></p>
+      </section>
+    </div>
+
     <template id="card-template">
       <article class="card">
+        <button class="card__trash-button" type="button"></button>
         <img class="card__image" src="" alt="" />
         <div class="card__wrapper">
           <h2 class="card__title"></h2>

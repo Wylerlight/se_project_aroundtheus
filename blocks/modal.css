@@ -5,9 +5,12 @@
   right: 0;
   bottom: 0;
   z-index: 999;
-  display: none;
+  display: flex;
   background-color: rgba(0, 0, 0, 0.5);
   padding: 0 19px;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.2s linear, opacity 0.2s linear;
 }
 
 .modal__container {
@@ -132,5 +135,8 @@
 }
 
 .modal_opened {
-  display: flex;
+  /* display: flex; */
+  visibility: visible;
+  opacity: 1;
+  transition: visibility 0.2s linear, opacity 0.2s linear;
 }

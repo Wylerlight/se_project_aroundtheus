@@ -1,0 +1,61 @@
+.image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.5);
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.2s linear, opacity 0.2s linear;
+}
+
+.image__container {
+  position: relative;
+  margin: auto;
+}
+
+.image__exit {
+  background-image: url(../images/plus-sign.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 40px;
+  height: 40px;
+  bottom: calc(100% + 0px);
+  left: calc(100% - 0px);
+  background-color: transparent;
+  transform: rotate(-45deg);
+  border: none;
+  padding: 0;
+  position: absolute;
+}
+
+.image__exit:hover {
+  cursor: pointer;
+  opacity: 60%;
+}
+
+.image__main {
+  max-width: 75vw;
+  max-height: 75vh;
+}
+
+.image__description {
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  color: #fff;
+  margin: 0;
+  padding-top: 10px;
+}
+
+.modal_opened {
+  /* display: flex; */
+  visibility: visible;
+  opacity: 1;
+  transition: visibility 0.2s linear, opacity 0.2s linear;
+}
