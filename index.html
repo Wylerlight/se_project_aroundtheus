@@ -113,16 +113,22 @@
             name="title"
             type="text"
             placeholder="Name"
+            minlength="2"
+            maxlength="40"
             required
           />
+          <span class="modal-description-name-error"></span>
           <input
             id="modal-description-job"
             class="modal__field"
             name="job"
             type="text"
             placeholder="Description"
+            minlength="2"
+            maxlength="200"
             required
           />
+          <span class="modal-description-job-error"></span>
           <button class="modal__button" type="submit">Save</button>
         </form>
       </section>
@@ -140,14 +146,20 @@
             name="title"
             type="text"
             placeholder="Title"
+            minlength="1"
+            maxlength="30"
+            required
           />
+          <span class="modal-description-title-error"></span>
           <input
             id="modal-description-url"
             class="modal__field"
             name="url"
             type="url"
             placeholder="Image link"
+            required
           />
+          <span class="modal-description-url-error"></span>
           <button class="modal__button" type="submit">Create</button>
         </form>
       </section>
@@ -173,5 +185,6 @@
       </article>
     </template>
     <script src="./scripts/index.js" defer></script>
+    <script src="./scripts/validate.js" defer></script>
   </body>
 </html>
