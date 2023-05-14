@@ -43,6 +43,7 @@ const cardTemplate =
   document.querySelector("#card-template").content.firstElementChild;
 
 const cardPopup = document.querySelector(".card-modal");
+const cardModalConatiner = cardPopup.querySelector(".card-container");
 const cardAddButton = document.querySelector(".profile__button-add");
 const cardModalExitButton = cardPopup.querySelector(".modal__exit");
 const cardFormElement = cardPopup.querySelector(".card-input");
@@ -51,6 +52,8 @@ const cardTitleInput = cardFormElement.querySelector(
 );
 const cardUrlInput = cardFormElement.querySelector("#modal-description-url");
 const imagePopupElement = document.querySelector(".image");
+const imagePopupConatiner =
+  imagePopupElement.querySelector(".image__container");
 const imagePopupMain = imagePopupElement.querySelector(".image__main");
 const imagePopupDescription = imagePopupElement.querySelector(
   ".image__description"
@@ -142,4 +145,43 @@ cardFormElement.addEventListener("submit", handleAddCardFormSubmit);
 
 imagePopupExit.addEventListener("click", () => {
   closeModal(imagePopupElement);
+});
+
+imagePopupElement.addEventListener("click", function overlayClickModalClose(e) {
+  if (!imagePopupConatiner.contains(e.target)) {
+    closeModal(imagePopupElement);
+  }
+});
+
+document.addEventListener("keydown", function escapeKeydownClosePopup(e) {
+  if (
+    e.key === "Escape" &&
+    imagePopupElement.classList.contains("modal_opened")
+  ) {
+    closeModal(imagePopupElement);
+  }
+});
+
+profilePopup.addEventListener("click", function overlayClickModalClose(e) {
+  if (!profileModalContainer.contains(e.target)) {
+    closeModal(profilePopup);
+  }
+});
+
+document.addEventListener("keydown", function escapeKeydownClosePopup(e) {
+  if (e.key === "Escape" && profilePopup.classList.contains("modal_opened")) {
+    closeModal(profilePopup);
+  }
+});
+
+cardPopup.addEventListener("click", function overlayClickModalClose(e) {
+  if (!cardModalConatiner.contains(e.target)) {
+    closeModal(cardPopup);
+  }
+});
+
+document.addEventListener("keydown", function escapeKeydownClosePopup(e) {
+  if (e.key === "Escape" && cardPopup.classList.contains("modal_opened")) {
+    closeModal(cardPopup);
+  }
 });

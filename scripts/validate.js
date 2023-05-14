@@ -1,25 +1,25 @@
 // enabling validation by calling enableValidation()
 // pass all the settings on call
 
-const showInputError = (formElement, inputElement, errorMessage) => {
+const showInputError = (formElement, inputElement, option) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.add("modal__field_type_error");
-  errorElement.textContent = errorMessage;
-  errorElement.classList.add("modal__error_visible");
+  inputElement.classList.add(option.inputErrorClass);
+  errorElement.textContent = inputElement.validationMessage;
+  errorElement.classList.add(option.errorClass);
 };
 
-const hideInputError = (formElement, inputElement) => {
+const hideInputError = (formElement, inputElement, option) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.remove("modal__field_type_error");
-  errorElement.classList.remove("modal__error_visible");
+  inputElement.classList.remove(option.inputErrorClass);
+  errorElement.classList.remove(option.errorClass);
   errorElement.textContent = "";
 };
 
-const checkInputValidity = (formElement, inputElement) => {
+const checkInputValidity = (formElement, inputElement, option) => {
   if (!inputElement.validity.valid) {
-    showInputError(formElement, inputElement, inputElement.validationMessage);
+    showInputError(formElement, inputElement, option);
   } else {
-    hideInputError(formElement, inputElement);
+    hideInputError(formElement, inputElement, option);
   }
 };
 
@@ -28,11 +28,11 @@ const setEventListeners = (formElement, option) => {
     formElement.querySelectorAll(option.inputSelector)
   );
   const buttonElement = formElement.querySelector(option.submitButtonSelector);
-  toggleButtonState(inputList, buttonElement);
+  //   toggleButtonState(inputList, buttonElement);
   inputList.forEach((inputElement) => {
     inputElement.addEventListener("input", function () {
-      checkInputValidity(formElement, inputElement);
-      toggleButtonState(inputList, buttonElement);
+      checkInputValidity(formElement, inputElement, option);
+      toggleButtonState(inputList, buttonElement, option);
     });
   });
 };
@@ -54,11 +54,13 @@ const hasInvalidInput = (inputList) => {
   });
 };
 
-const toggleButtonState = (inputList, buttonElement) => {
+const toggleButtonState = (inputList, buttonElement, option) => {
   if (hasInvalidInput(inputList)) {
-    buttonElement.classList.add("modal__button_disabled");
+    buttonElement.classList.add(option.inactiveButtonClass);
+    buttonElement.disabled = true;
   } else {
-    buttonElement.classList.remove("modal__button_disabled");
+    buttonElement.classList.remove(option.inactiveButtonClass);
+    buttonElement.disabled = false;
   }
 };
 
