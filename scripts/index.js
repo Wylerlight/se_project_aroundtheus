@@ -64,10 +64,12 @@ const imagePopupExit = imagePopupElement.querySelector(".image__exit");
 
 function openModal(modal) {
   modal.classList.add("modal_opened");
+  document.addEventListener("keydown", escapeKeydownClosePopup);
 }
 
 function closeModal(modal) {
   modal.classList.remove("modal_opened");
+  document.removeEventListener("keydown", escapeKeydownClosePopup);
 }
 
 function renderCard(cardData, wrapper) {
@@ -147,41 +149,19 @@ imagePopupExit.addEventListener("click", () => {
   closeModal(imagePopupElement);
 });
 
-imagePopupElement.addEventListener("click", function overlayClickModalClose(e) {
-  if (!imagePopupConatiner.contains(e.target)) {
-    closeModal(imagePopupElement);
+function escapeKeydownClosePopup(evt) {
+  if (evt.key === "Escape") {
+    const openedModal = document.querySelector(".modal_opened");
+    closeModal(openedModal);
   }
-});
+}
 
-document.addEventListener("keydown", function escapeKeydownClosePopup(e) {
-  if (
-    e.key === "Escape" &&
-    imagePopupElement.classList.contains("modal_opened")
-  ) {
-    closeModal(imagePopupElement);
+function closeModalOnRemoteClick(evt) {
+  if (evt.target === evt.currentTarget) {
+    closeModal(evt.target);
   }
-});
+}
 
-profilePopup.addEventListener("click", function overlayClickModalClose(e) {
-  if (!profileModalContainer.contains(e.target)) {
-    closeModal(profilePopup);
-  }
-});
-
-document.addEventListener("keydown", function escapeKeydownClosePopup(e) {
-  if (e.key === "Escape" && profilePopup.classList.contains("modal_opened")) {
-    closeModal(profilePopup);
-  }
-});
-
-cardPopup.addEventListener("click", function overlayClickModalClose(e) {
-  if (!cardModalConatiner.contains(e.target)) {
-    closeModal(cardPopup);
-  }
-});
-
-document.addEventListener("keydown", function escapeKeydownClosePopup(e) {
-  if (e.key === "Escape" && cardPopup.classList.contains("modal_opened")) {
-    closeModal(cardPopup);
-  }
-});
+imagePopupElement.addEventListener("mousedown", closeModalOnRemoteClick);
+profilePopup.addEventListener("mousedown", closeModalOnRemoteClick);
+cardPopup.addEventListener("mousedown", closeModalOnRemoteClick);
