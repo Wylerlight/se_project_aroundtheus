@@ -64,12 +64,12 @@ const imagePopupExit = imagePopupElement.querySelector(".image__exit");
 
 function openModal(modal) {
   modal.classList.add("modal_opened");
-  document.addEventListener("keydown", escapeKeydownClosePopup);
+  document.addEventListener("keydown", closePopupWithEscapeKeydown);
 }
 
 function closeModal(modal) {
   modal.classList.remove("modal_opened");
-  document.removeEventListener("keydown", escapeKeydownClosePopup);
+  document.removeEventListener("keydown", closePopupWithEscapeKeydown);
 }
 
 function renderCard(cardData, wrapper) {
@@ -149,7 +149,7 @@ imagePopupExit.addEventListener("click", () => {
   closeModal(imagePopupElement);
 });
 
-function escapeKeydownClosePopup(evt) {
+function closePopupWithEscapeKeydown(evt) {
   if (evt.key === "Escape") {
     const openedModal = document.querySelector(".modal_opened");
     closeModal(openedModal);
