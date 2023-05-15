@@ -51,6 +51,7 @@ const cardTitleInput = cardFormElement.querySelector(
   "#modal-description-title"
 );
 const cardUrlInput = cardFormElement.querySelector("#modal-description-url");
+const cardSubmitButton = cardFormElement.querySelector(".card-submit-button");
 const imagePopupElement = document.querySelector(".image");
 const imagePopupConatiner =
   imagePopupElement.querySelector(".image__container");
@@ -94,6 +95,7 @@ function handleAddCardFormSubmit(evt) {
   renderCard({ name, link }, cardListElement);
   cardFormElement.reset();
   closeModal(cardPopup);
+  toggleButtonState(cardFormElement, cardSubmitButton, config);
 }
 
 function getCardElement(cardData) {
