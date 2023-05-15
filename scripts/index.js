@@ -92,7 +92,7 @@ function handleAddCardFormSubmit(evt) {
   const name = cardTitleInput.value;
   const link = cardUrlInput.value;
   const cardInputList = Array.from(
-    cardFormElement.querySelector(config.inputSelector)
+    cardFormElement.querySelectorAll(config.inputSelector)
   );
 
   renderCard({ name, link }, cardListElement);
