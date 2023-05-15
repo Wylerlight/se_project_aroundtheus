@@ -91,11 +91,14 @@ function handleAddCardFormSubmit(evt) {
 
   const name = cardTitleInput.value;
   const link = cardUrlInput.value;
+  const cardInputList = Array.from(
+    cardFormElement.querySelector(config.inputSelector)
+  );
 
   renderCard({ name, link }, cardListElement);
   cardFormElement.reset();
+  toggleButtonState(cardInputList, cardSubmitButton, config);
   closeModal(cardPopup);
-  toggleButtonState(cardFormElement, cardSubmitButton, config);
 }
 
 function getCardElement(cardData) {
