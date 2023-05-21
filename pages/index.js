@@ -55,7 +55,7 @@ const cardUrlInput = cardFormElement.querySelector("#modal-description-url");
 const cardSubmitButton = cardFormElement.querySelector(".card-submit-button");
 const imagePopupElement = document.querySelector(".image");
 
-const imagePopupExit = imagePopupElement.querySelector(".modal__exit");
+const imagePopupExit = imagePopupElement.querySelector(".image__exit");
 
 const settings = {
   inputSelector: ".modal__field",
