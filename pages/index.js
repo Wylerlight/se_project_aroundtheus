@@ -55,7 +55,7 @@ const cardUrlInput = cardFormElement.querySelector("#modal-description-url");
 const cardSubmitButton = cardFormElement.querySelector(".card-submit-button");
 const imagePopupElement = document.querySelector(".image");
 
-const imagePopupExit = imagePopupElement.querySelector(".image__exit");
+const imagePopupExit = imagePopupElement.querySelector(".modal__exit");
 
 const settings = {
   inputSelector: ".modal__field",
@@ -89,7 +89,7 @@ function handleAddCardFormSubmit(evt) {
 
   renderCard({ name, link }, cardListElement);
   cardFormElement.reset();
-  addCardFormValidator._toggleButtonState();
+  addCardFormValidator.toggleButtonState();
   closeModal(cardPopup);
 }
 
@@ -127,11 +127,8 @@ imagePopupElement.addEventListener("mousedown", closeModalOnRemoteClick);
 profilePopup.addEventListener("mousedown", closeModalOnRemoteClick);
 cardPopup.addEventListener("mousedown", closeModalOnRemoteClick);
 
-const editProfileSelector = profilePopup.querySelector(".modal__input");
-const addCardFormSelector = cardPopup.querySelector(".modal__input");
-
-const editFormValidator = new FormValidator(settings, editProfileSelector);
+const editFormValidator = new FormValidator(settings, profileFormElement);
 editFormValidator.enableValidation();
 
-const addCardFormValidator = new FormValidator(settings, addCardFormSelector);
+const addCardFormValidator = new FormValidator(settings, cardFormElement);
 addCardFormValidator.enableValidation();

@@ -18,7 +18,6 @@ export default class Card {
     this._imageModal = document.querySelector(".image");
     const cardLikeButton = this._element.querySelector(".card__button");
     const cardTrashButton = this._element.querySelector(".card__trash-button");
-    const cardImagePreviewElement = this._element.querySelector(".card__image");
 
     const imagePopupMain = this._imageModal.querySelector(".image__main");
     const imagePopupDescription = this._imageModal.querySelector(
@@ -33,7 +32,7 @@ export default class Card {
       this._element.remove();
     });
 
-    cardImagePreviewElement.addEventListener("click", () => {
+    this._cardImageElement.addEventListener("click", () => {
       imagePopupMain.src = this._link;
       imagePopupMain.alt = this._name;
       imagePopupDescription.textContent = this._name;
