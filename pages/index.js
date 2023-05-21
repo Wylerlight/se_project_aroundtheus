@@ -101,21 +101,21 @@ profileModalExitButton.addEventListener(
 
 profileFormElement.addEventListener("submit", handleProfileFormSubmit);
 
-initialCards.forEach((cardData) => renderCard(cardData, cardListElement));
+initialCards.forEach((cardData) => new renderCard(cardData, cardListElement));
 
-cardAddButton.addEventListener("click", () => openModal(cardPopup));
+cardAddButton.addEventListener("click", () => new openModal(cardPopup));
 
-cardModalExitButton.addEventListener("click", () => closeModal(cardPopup));
+cardModalExitButton.addEventListener("click", () => new closeModal(cardPopup));
 
 cardFormElement.addEventListener("submit", handleAddCardFormSubmit);
 
 imagePopupExit.addEventListener("click", () => {
-  closeModal(imagePopupElement);
+  new closeModal(imagePopupElement);
 });
 
 function closeModalOnRemoteClick(evt) {
   if (evt.target === evt.currentTarget) {
-    closeModal(evt.target);
+    new closeModal(evt.target);
   }
 }
 
