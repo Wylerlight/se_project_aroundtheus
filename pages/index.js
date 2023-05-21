@@ -57,6 +57,14 @@ const imagePopupElement = document.querySelector(".image");
 
 const imagePopupExit = imagePopupElement.querySelector(".image__exit");
 
+const settings = {
+  inputSelector: ".modal__field",
+  submitButtonSelector: ".modal__button",
+  inactiveButtonClass: "modal__button_disabled",
+  inputErrorClass: "modal__field_type_error",
+  errorClass: "modal__error_visible",
+};
+
 /////////////////////////
 
 function renderCard(cardData, wrapper) {
@@ -70,7 +78,7 @@ function handleProfileFormSubmit(evt) {
 
   profileTitle.textContent = titleInput.value;
   profileJob.textContent = jobInput.value;
-  new closeModal(profilePopup);
+  closeModal(profilePopup);
 }
 
 function handleAddCardFormSubmit(evt) {
@@ -82,40 +90,44 @@ function handleAddCardFormSubmit(evt) {
     cardFormElement.querySelectorAll(settings.inputSelector)
   );
 
-  new renderCard({ name, link }, cardListElement);
+  renderCard({ name, link }, cardListElement);
   cardFormElement.reset();
-  FormValidator._toggleButtonState(cardInputList, cardSubmitButton, settings);
-  new closeModal(cardPopup);
+  const toggleButton = new FormValidator(
+    cardInputList,
+    cardSubmitButton,
+    settings
+  );
+  toggleButton._toggleButtonState();
+  closeModal(cardPopup);
 }
 
 profileEditButton.addEventListener("click", () => {
   titleInput.value = profileTitle.textContent;
   jobInput.value = profileJob.textContent;
-  new openModal(profilePopup);
+  openModal(profilePopup);
 });
 
-profileModalExitButton.addEventListener(
-  "click",
-  () => new closeModal(profilePopup)
+profileModalExitButton.addEventListener("click", () =>
+  closeModal(profilePopup)
 );
 
 profileFormElement.addEventListener("submit", handleProfileFormSubmit);
 
-initialCards.forEach((cardData) => new renderCard(cardData, cardListElement));
+initialCards.forEach((cardData) => renderCard(cardData, cardListElement));
 
-cardAddButton.addEventListener("click", () => new openModal(cardPopup));
+cardAddButton.addEventListener("click", () => openModal(cardPopup));
 
-cardModalExitButton.addEventListener("click", () => new closeModal(cardPopup));
+cardModalExitButton.addEventListener("click", () => closeModal(cardPopup));
 
 cardFormElement.addEventListener("submit", handleAddCardFormSubmit);
 
 imagePopupExit.addEventListener("click", () => {
-  new closeModal(imagePopupElement);
+  closeModal(imagePopupElement);
 });
 
 function closeModalOnRemoteClick(evt) {
   if (evt.target === evt.currentTarget) {
-    new closeModal(evt.target);
+    closeModal(evt.target);
   }
 }
 
@@ -123,13 +135,6 @@ imagePopupElement.addEventListener("mousedown", closeModalOnRemoteClick);
 profilePopup.addEventListener("mousedown", closeModalOnRemoteClick);
 cardPopup.addEventListener("mousedown", closeModalOnRemoteClick);
 
-const settings = {
-  inputSelector: ".modal__field",
-  submitButtonSelector: ".modal__button",
-  inactiveButtonClass: "modal__button_disabled",
-  inputErrorClass: "modal__field_type_error",
-  errorClass: "modal__error_visible",
-};
 const editProfileSelector = profilePopup.querySelector(".modal__input");
 const addCardFormSelector = cardPopup.querySelector(".modal__input");
 
