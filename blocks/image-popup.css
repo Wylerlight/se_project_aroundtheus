@@ -1,4 +1,4 @@
-.image {
+.image-modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -7,6 +7,7 @@
   z-index: 999;
   display: flex;
   background-color: rgba(0, 0, 0, 0.5);
+  padding: none;
   visibility: hidden;
   opacity: 0;
   transition: visibility 0.2s linear, opacity 0.2s linear;
