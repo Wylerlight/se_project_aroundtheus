@@ -86,18 +86,10 @@ function handleAddCardFormSubmit(evt) {
 
   const name = cardTitleInput.value;
   const link = cardUrlInput.value;
-  const cardInputList = Array.from(
-    cardFormElement.querySelectorAll(settings.inputSelector)
-  );
 
   renderCard({ name, link }, cardListElement);
   cardFormElement.reset();
-  const toggleButton = new FormValidator(
-    cardInputList,
-    cardSubmitButton,
-    settings
-  );
-  toggleButton._toggleButtonState();
+  addCardFormValidator._toggleButtonState();
   closeModal(cardPopup);
 }
 
