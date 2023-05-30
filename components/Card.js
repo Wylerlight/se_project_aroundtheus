@@ -1,9 +1,12 @@
+// This fle is for adding function to the newly created card such as: function to the trash icon, interactive like button, cloning the template of the structure of the card
+
 import { openModal } from "../utils/utils.js";
 
 export default class Card {
-  constructor(data, cardSelector) {
+  constructor(data, cardSelector, handleCardClick) {
     this._name = data.name;
     this._link = data.link;
+    this._handleCardClick = handleCardClick;
 
     this._cardSelector = cardSelector;
   }
@@ -15,14 +18,10 @@ export default class Card {
   }
 
   _setEventListeners() {
-    this._imageModal = document.querySelector(".image");
     const cardLikeButton = this._element.querySelector(".card__button");
     const cardTrashButton = this._element.querySelector(".card__trash-button");
 
-    const imagePopupMain = this._imageModal.querySelector(".image__main");
-    const imagePopupDescription = this._imageModal.querySelector(
-      ".image__description"
-    );
+    const imageModal = document.querySelector(".card__image");
 
     cardLikeButton.addEventListener("click", () => {
       cardLikeButton.classList.toggle("card__like-active");
@@ -33,10 +32,7 @@ export default class Card {
     });
 
     this._cardImageElement.addEventListener("click", () => {
-      imagePopupMain.src = this._link;
-      imagePopupMain.alt = this._name;
-      imagePopupDescription.textContent = this._name;
-      openModal(this._imageModal);
+      this._handleCardClick(this._cardImageElement);
     });
   }
 
