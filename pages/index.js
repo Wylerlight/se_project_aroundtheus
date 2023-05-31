@@ -3,6 +3,7 @@ import { openModal, closeModal } from "../utils/utils.js";
 import FormValidator from "../components/FormValidator.js";
 import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
+import PopupWithForm from "../components/PopupWithForm.js";
 import Popup from "../components/Popup.js";
 
 const initialCards = [
@@ -70,10 +71,11 @@ const settings = {
 /* -------------------------------------------------------------------------- */
 /*                                  New Code                                  */
 /* -------------------------------------------------------------------------- */
-const imagePopup = new PopupWithImage(".image");
 
 function handleCardClick(data) {
+  const imagePopup = new PopupWithImage(".image");
   imagePopup.open(data);
+  imagePopup.setEventListeners();
 }
 
 /*  Render cards with sepcified template and data  */
@@ -91,6 +93,13 @@ const cardSection = new Section(
 
 cardSection.renderItems();
 
+/* -------------------------------------------------------------------------- */
+/*                            PopupwithForm Section                           */
+/* -------------------------------------------------------------------------- */
+
+const profilePopupForm = new PopupWithForm(".modal");
+profilePopupForm.setEventListeners();
+
 /*  Validation forms for profile info edit and new card sections  */
 
 const editFormValidator = new FormValidator(settings, profileFormElement);
@@ -102,46 +111,3 @@ addCardFormValidator.enableValidation(); // uses validation settings from FormVa
 /* -------------------------------------------------------------------------- */
 /*                                  Old Code                                  */
 /* -------------------------------------------------------------------------- */
-/* A */ function handleProfileFormSubmit(evt) {
-  // gathers the data that was input, replaces old profile info with new data, resets profile edit inputs, toggles validation settings, closes profile edit modal
-  evt.preventDefault();
-
-  profileTitle.textContent = titleInput.value;
-  profileJob.textContent = jobInput.value;
-  closeModal(profilePopup);
-}
-
-/* B */ function handleAddCardFormSubmit(evt) {
-  // gathers the data that was input, renders new card with data, resets card inputs, toggles validation for button mode (active/inactive) after form submission, closes new card modal
-  evt.preventDefault();
-
-  const name = cardTitleInput.value;
-  const link = cardUrlInput.value;
-
-  renderCard({ name, link }, cardListElement);
-  cardFormElement.reset();
-  addCardFormValidator.toggleButtonState();
-  closeModal(cardPopup);
-}
-
-/* C */ profileEditButton.addEventListener("click", () => {
-  // adds event listener that opens the profile edit inputs modal when clicking the edit button
-  titleInput.value = profileTitle.textContent;
-  jobInput.value = profileJob.textContent;
-  openModal(profilePopup);
-});
-
-/* D */ profileModalExitButton.addEventListener("click", () =>
-  // adds click event listener to the profile edit close button (x) to close modal when clicked
-  closeModal(profilePopup)
-);
-
-/* E */ profileFormElement.addEventListener("submit", handleProfileFormSubmit); // adds event listener to form wrapper for profile edit inputs & submit button. calls handleAddCardFormSubmit
-
-/* F */ cardAddButton.addEventListener("click", () => openModal(cardPopup)); // opens the new card input modal
-
-/* G */ cardModalExitButton.addEventListener("click", () =>
-  closeModal(cardPopup)
-); // closes the new card input modal when clicking the close (X) button
-
-/* H */ cardFormElement.addEventListener("submit", handleAddCardFormSubmit); // adds event listener to form wrapper for new card inputs & submit button. calls handleAddCardFormSubmit
