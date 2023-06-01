@@ -1,10 +1,9 @@
 import Card from "../components/Card.js";
-import { openModal, closeModal } from "../utils/utils.js";
 import FormValidator from "../components/FormValidator.js";
 import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
-import Popup from "../components/Popup.js";
+import UserInfo from "../components/UserInfo.js";
 
 const initialCards = [
   {
@@ -33,32 +32,21 @@ const initialCards = [
   },
 ];
 
-//////// Dom Manipulation ////////
+/* -------------------------------------------------------------------------- */
+/*                       Constants : Temporary Placement                      */
+/* -------------------------------------------------------------------------- */
 
-const profilePopup = document.querySelector(".profile-modal"); // div wrapper for entire profile edit modal
 const profileEditButton = document.querySelector(".profile__button-edit"); // edit button for profile info
-const profileModalExitButton = profilePopup.querySelector(".modal__exit"); // exit button (X) for profile edit modal
 const profileModalContainer = document.querySelector(".profile-container");
 const profileTitle = document.querySelector(".profile__title");
 const profileJob = document.querySelector(".profile__description");
 const profileFormElement =
   profileModalContainer.querySelector(".profile-input"); // form wrapper for profile edit inputs
-const titleInput = profileFormElement.querySelector("#modal-description-name");
-const jobInput = profileFormElement.querySelector("#modal-description-job");
 
 const cardListElement = document.querySelector(".cards"); // this is the empty <section> that new cards are added to
 
 const cardPopup = document.querySelector(".card-modal"); // wrapper for the entire new card modal
-const cardAddButton = document.querySelector(".profile__button-add"); // Button that opens the new card input modal
-const cardModalExitButton = cardPopup.querySelector(".modal__exit"); // finds the modal__exit class inside the wrapper containing card-modal
 const cardFormElement = cardPopup.querySelector(".card-input"); // form wrapper for new card inputs & submit button
-const cardTitleInput = cardFormElement.querySelector(
-  "#modal-description-title"
-);
-const cardUrlInput = cardFormElement.querySelector("#modal-description-url");
-const imagePopupElement = document.querySelector(".image"); // the div wrapper for the enlarged image
-
-const imagePopupExit = imagePopupElement.querySelector(".modal__exit"); // close button on enlarged image popup
 
 const settings = {
   inputSelector: ".modal__field",
@@ -69,7 +57,7 @@ const settings = {
 };
 
 /* -------------------------------------------------------------------------- */
-/*                                  New Code                                  */
+/*                              Popup Card Image                              */
 /* -------------------------------------------------------------------------- */
 
 function handleCardClick(data) {
@@ -78,7 +66,10 @@ function handleCardClick(data) {
   imagePopup.setEventListeners();
 }
 
-/*  Render cards with sepcified template and data  */
+/* -------------------------------------------------------------------------- */
+/*                         Initial Card Render Section                        */
+/* -------------------------------------------------------------------------- */
+
 const cardSection = new Section(
   {
     items: initialCards,
@@ -94,20 +85,26 @@ const cardSection = new Section(
 cardSection.renderItems();
 
 /* -------------------------------------------------------------------------- */
-/*                            PopupwithForm Section                           */
+/*                          Form Popup : Edit Profile                         */
 /* -------------------------------------------------------------------------- */
 
-const profilePopupForm = new PopupWithForm(".modal");
-profilePopupForm.setEventListeners();
+const userInfo = new UserInfo(profileTitle, profileJob);
 
-/*  Validation forms for profile info edit and new card sections  */
+const profilePopupForm = new PopupWithForm(".profile-modal", (inputValues) => {
+  console.log(inputValues);
+  userInfo.setUserInfo(inputValues);
+});
+
+profileEditButton.addEventListener("click", () => {
+  profilePopupForm.setEventListeners();
+  profilePopupForm.open();
+});
+
+/* -------------------------------------------------------------------------- */
+/*                               Form Validators                              */
+/* -------------------------------------------------------------------------- */
 
 const editFormValidator = new FormValidator(settings, profileFormElement);
-editFormValidator.enableValidation(); // uses validation settings from FormValidator.js and applies them to the profile edit inputs
-
+editFormValidator.enableValidation();
 const addCardFormValidator = new FormValidator(settings, cardFormElement);
-addCardFormValidator.enableValidation(); // uses validation settings from FormValidator.js and applies them to the new card inputs
-
-/* -------------------------------------------------------------------------- */
-/*                                  Old Code                                  */
-/* -------------------------------------------------------------------------- */
+addCardFormValidator.enableValidation();
