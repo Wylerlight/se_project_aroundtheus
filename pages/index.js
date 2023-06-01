@@ -7,28 +7,28 @@ import UserInfo from "../components/UserInfo.js";
 
 const initialCards = [
   {
-    name: "Lago di Braies",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg",
+    title: "Lago di Braies",
+    url: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg",
   },
   {
-    name: "Vanoise National Park",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/vanoise.jpg",
+    title: "Vanoise National Park",
+    url: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/vanoise.jpg",
   },
   {
-    name: "Latemar",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/latemar.jpg",
+    title: "Latemar",
+    url: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/latemar.jpg",
   },
   {
-    name: "Bald Mountains",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/bald-mountains.jpg",
+    title: "Bald Mountains",
+    url: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/bald-mountains.jpg",
   },
   {
-    name: "Lake Louise",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lake-louise.jpg",
+    title: "Lake Louise",
+    url: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lake-louise.jpg",
   },
   {
-    name: "Yosemite Valley",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
+    title: "Yosemite Valley",
+    url: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
   },
 ];
 
@@ -47,6 +47,9 @@ const cardListElement = document.querySelector(".cards"); // this is the empty <
 
 const cardPopup = document.querySelector(".card-modal"); // wrapper for the entire new card modal
 const cardFormElement = cardPopup.querySelector(".card-input"); // form wrapper for new card inputs & submit button
+const titleInput = profileFormElement.querySelector("#modal-description-name");
+const jobInput = profileFormElement.querySelector("#modal-description-job");
+const cardAddButton = document.querySelector(".profile__button-add");
 
 const settings = {
   inputSelector: ".modal__field",
@@ -91,14 +94,43 @@ cardSection.renderItems();
 const userInfo = new UserInfo(profileTitle, profileJob);
 
 const profilePopupForm = new PopupWithForm(".profile-modal", (inputValues) => {
-  console.log(inputValues);
   userInfo.setUserInfo(inputValues);
+  profilePopupForm.close();
 });
+profilePopupForm.setEventListeners();
 
 profileEditButton.addEventListener("click", () => {
-  profilePopupForm.setEventListeners();
+  const userData = userInfo.getUserInfo();
+
+  titleInput.value = userData.userName;
+  jobInput.value = userData.userJobDescription;
   profilePopupForm.open();
 });
+
+/* -------------------------------------------------------------------------- */
+/*                        Form Popup : Adding New Card                        */
+/* -------------------------------------------------------------------------- */
+
+const newCardPopupForm = new PopupWithForm(".card-modal", (inputValues) => {
+  const newCardItem = new Section(
+    {
+      items: [inputValues],
+      renderer: (item) => {
+        const addNewCard = new Card(item, "#card-template", handleCardClick);
+        const cardElement = addNewCard.getCard();
+        cardSection.addItem(cardElement);
+      },
+    },
+    cardListElement
+  );
+  newCardItem.renderItems();
+  newCardPopupForm.close();
+});
+
+cardAddButton.addEventListener("click", () => {
+  newCardPopupForm.open();
+});
+newCardPopupForm.setEventListeners();
 
 /* -------------------------------------------------------------------------- */
 /*                               Form Validators                              */

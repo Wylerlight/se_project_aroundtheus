@@ -1,3 +1,8 @@
+/* /* -------------------------------------------------------------------------- */
+/*              This file to be updated after reviewer submission             */
+/* -------------------------------------------------------------------------- */
+
+/*
 export const profilePopup = document.querySelector(".profile-modal");
 export const profileEditButton = document.querySelector(
   ".profile__button-edit"
@@ -43,3 +48,4 @@ export const settings = {
   inputErrorClass: "modal__field_type_error",
   errorClass: "modal__error_visible",
 };
+ */
