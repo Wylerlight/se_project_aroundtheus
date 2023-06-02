@@ -112,6 +112,7 @@ profileEditButton.addEventListener("click", () => {
 
   titleInput.value = userData.userName;
   jobInput.value = userData.userJobDescription;
+  editFormValidator.toggleButtonState();
   profilePopupForm.open();
 });
 
@@ -132,6 +133,7 @@ const newCardPopupForm = new PopupWithForm(".card-modal", (inputValues) => {
 });
 
 cardAddButton.addEventListener("click", () => {
+  addCardFormValidator.toggleButtonState();
   newCardPopupForm.open();
 });
 newCardPopupForm.setEventListeners();
