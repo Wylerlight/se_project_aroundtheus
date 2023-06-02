@@ -60,14 +60,21 @@ const settings = {
   errorClass: "modal__error_visible",
 };
 
+const renderCard = (item) => {
+  const addNewCard = new Card(item, "#card-template", handleCardClick);
+  const cardElement = addNewCard.getCard();
+  cardSection.addItem(cardElement);
+};
+
 /* -------------------------------------------------------------------------- */
 /*                              Popup Card Image                              */
 /* -------------------------------------------------------------------------- */
+const imagePopup = new PopupWithImage(".image");
 
 function handleCardClick(data) {
-  const imagePopup = new PopupWithImage(".image");
   imagePopup.open(data);
   imagePopup.setEventListeners();
+  imagePopup.overlayClickCloseListener();
 }
 
 /* -------------------------------------------------------------------------- */
@@ -77,13 +84,9 @@ function handleCardClick(data) {
 const cardSection = new Section(
   {
     items: initialCards,
-    renderer: (item) => {
-      const newCard = new Card(item, "#card-template", handleCardClick);
-      const cardElement = newCard.getCard();
-      cardSection.addItem(cardElement);
-    },
+    renderer: renderCard,
   },
-  cardListElement
+  ".cards"
 );
 
 cardSection.renderItems();
@@ -92,13 +95,17 @@ cardSection.renderItems();
 /*                          Form Popup : Edit Profile                         */
 /* -------------------------------------------------------------------------- */
 
-const userInfo = new UserInfo(profileTitle, profileJob);
+const userInfo = new UserInfo({
+  userNameSelector: ".profile__title",
+  userJobSelector: ".profile__description",
+});
 
 const profilePopupForm = new PopupWithForm(".profile-modal", (inputValues) => {
   userInfo.setUserInfo(inputValues);
   profilePopupForm.close();
 });
 profilePopupForm.setEventListeners();
+profilePopupForm.overlayClickCloseListener();
 
 profileEditButton.addEventListener("click", () => {
   const userData = userInfo.getUserInfo();
@@ -116,13 +123,9 @@ const newCardPopupForm = new PopupWithForm(".card-modal", (inputValues) => {
   const newCardItem = new Section(
     {
       items: [inputValues],
-      renderer: (item) => {
-        const addNewCard = new Card(item, "#card-template", handleCardClick);
-        const cardElement = addNewCard.getCard();
-        cardSection.addItem(cardElement);
-      },
+      renderer: renderCard,
     },
-    cardListElement
+    ".cards"
   );
   newCardItem.renderItems();
   newCardPopupForm.close();
@@ -132,6 +135,7 @@ cardAddButton.addEventListener("click", () => {
   newCardPopupForm.open();
 });
 newCardPopupForm.setEventListeners();
+newCardPopupForm.overlayClickCloseListener();
 
 /* -------------------------------------------------------------------------- */
 /*                               Form Validators                              */
