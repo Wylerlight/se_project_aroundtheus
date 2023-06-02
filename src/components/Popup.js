@@ -27,13 +27,15 @@ export default class Popup {
     this._modalExitButton.addEventListener("click", () => {
       this.close();
     });
+    this._popupElement.addEventListener(
+      "mousedown",
+      this._overlayClickCloseListener
+    );
   }
 
-  overlayClickCloseListener() {
-    this._popupElement.addEventListener("mousedown", (evt) => {
-      if (evt.target === evt.currentTarget) {
-        this.close(evt.target);
-      }
-    });
-  }
+  _overlayClickCloseListener = (evt) => {
+    if (evt.target === evt.currentTarget) {
+      this.close(evt.target);
+    }
+  };
 }

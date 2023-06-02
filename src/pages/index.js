@@ -70,11 +70,10 @@ const renderCard = (item) => {
 /*                              Popup Card Image                              */
 /* -------------------------------------------------------------------------- */
 const imagePopup = new PopupWithImage(".image");
+imagePopup.setEventListeners();
 
 function handleCardClick(data) {
   imagePopup.open(data);
-  imagePopup.setEventListeners();
-  imagePopup.overlayClickCloseListener();
 }
 
 /* -------------------------------------------------------------------------- */
@@ -105,7 +104,6 @@ const profilePopupForm = new PopupWithForm(".profile-modal", (inputValues) => {
   profilePopupForm.close();
 });
 profilePopupForm.setEventListeners();
-profilePopupForm.overlayClickCloseListener();
 
 profileEditButton.addEventListener("click", () => {
   const userData = userInfo.getUserInfo();
@@ -121,14 +119,7 @@ profileEditButton.addEventListener("click", () => {
 /* -------------------------------------------------------------------------- */
 
 const newCardPopupForm = new PopupWithForm(".card-modal", (inputValues) => {
-  const newCardItem = new Section(
-    {
-      items: [inputValues],
-      renderer: renderCard,
-    },
-    ".cards"
-  );
-  newCardItem.renderItems();
+  renderCard(inputValues);
   newCardPopupForm.close();
 });
 
@@ -137,7 +128,6 @@ cardAddButton.addEventListener("click", () => {
   newCardPopupForm.open();
 });
 newCardPopupForm.setEventListeners();
-newCardPopupForm.overlayClickCloseListener();
 
 /* -------------------------------------------------------------------------- */
 /*                               Form Validators                              */
