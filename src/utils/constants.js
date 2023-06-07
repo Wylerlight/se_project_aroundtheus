@@ -38,6 +38,7 @@ export const cardSubmitButton = cardFormElement.querySelector(
   ".card-submit-button"
 );
 export const imagePopupElement = document.querySelector(".image");
+export const imagePopupElement = document.querySelector(".image");
 
 export const imagePopupExit = imagePopupElement.querySelector(".modal__exit");
 
