@@ -4,34 +4,35 @@ import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
+import Api from "../components/Api.js";
 import "./index.css";
 
-const initialCards = [
+/* const initialCards = [
   {
-    title: "Lago di Braies",
-    url: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg",
+    name: "Lago di Braies",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg",
   },
   {
-    title: "Vanoise National Park",
-    url: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/vanoise.jpg",
+    name: "Vanoise National Park",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/vanoise.jpg",
   },
   {
-    title: "Latemar",
-    url: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/latemar.jpg",
+    name: "Latemar",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/latemar.jpg",
   },
   {
-    title: "Bald Mountains",
-    url: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/bald-mountains.jpg",
+    name: "Bald Mountains",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/bald-mountains.jpg",
   },
   {
-    title: "Lake Louise",
-    url: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lake-louise.jpg",
+    name: "Lake Louise",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lake-louise.jpg",
   },
   {
-    title: "Yosemite Valley",
-    url: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
+    name: "Yosemite Valley",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
   },
-];
+]; */
 
 /* -------------------------------------------------------------------------- */
 /*                       Constants : Temporary Placement                      */
@@ -52,6 +53,11 @@ const titleInput = profileFormElement.querySelector("#modal-description-name");
 const jobInput = profileFormElement.querySelector("#modal-description-job");
 const cardAddButton = document.querySelector(".profile__button-add");
 
+const userProfileAvatar = document.querySelector(".profile__avatar");
+
+const newCardNameInput = document.querySelector("#modal-description-title");
+const newCardImageUrlInput = document.querySelector("#modal-description-url");
+
 const settings = {
   inputSelector: ".modal__field",
   submitButtonSelector: ".modal__button",
@@ -60,11 +66,24 @@ const settings = {
   errorClass: "modal__error_visible",
 };
 
+let cardSection;
+
 const renderCard = (item) => {
   const addNewCard = new Card(item, "#card-template", handleCardClick);
   const cardElement = addNewCard.getCard();
   cardSection.addItem(cardElement);
 };
+
+/* -------------------------------------------------------------------------- */
+/*                                API Constant                                */
+/* -------------------------------------------------------------------------- */
+const api = new Api({
+  baseUrl: "https://around.nomoreparties.co/v1/group-12",
+  headers: {
+    authorization: "5e7676bf-611c-4ca9-9820-f740c8ee0732",
+    "Content-Type": "application/json",
+  },
+});
 
 /* -------------------------------------------------------------------------- */
 /*                              Popup Card Image                              */
@@ -80,29 +99,40 @@ function handleCardClick(data) {
 /*                         Initial Card Render Section                        */
 /* -------------------------------------------------------------------------- */
 
-const cardSection = new Section(
-  {
-    items: initialCards,
-    renderer: renderCard,
-  },
-  ".cards"
-);
+// const cardSection = new Section(
+//   {
+//     items: initialCards,
+//     renderer: renderCard,
+//   },
+//   ".cards"
+// );
 
-cardSection.renderItems();
+// cardSection.renderItems();
 
 /* -------------------------------------------------------------------------- */
 /*                          Form Popup : Edit Profile                         */
 /* -------------------------------------------------------------------------- */
+function handleProfileFormSubmit() {
+  api
+    .editProfileInformation({ name: titleInput.value, about: jobInput.value })
+    .then((newUserData) => {
+      profileTitle.textContent = newUserData.name;
+      profileJob.textContent = newUserData.about;
+      userProfileAvatar.src = newUserData.avatar;
+      userProfileAvatar.alt = newUserData.name;
+    });
+  profilePopupForm.close();
+}
 
 const userInfo = new UserInfo({
   userNameSelector: ".profile__title",
   userJobSelector: ".profile__description",
 });
 
-const profilePopupForm = new PopupWithForm(".profile-modal", (inputValues) => {
-  userInfo.setUserInfo(inputValues);
-  profilePopupForm.close();
-});
+const profilePopupForm = new PopupWithForm(
+  ".profile-modal",
+  handleProfileFormSubmit
+);
 profilePopupForm.setEventListeners();
 
 profileEditButton.addEventListener("click", () => {
@@ -118,10 +148,57 @@ profileEditButton.addEventListener("click", () => {
 /*                        Form Popup : Adding New Card                        */
 /* -------------------------------------------------------------------------- */
 
-const newCardPopupForm = new PopupWithForm(".card-modal", (inputValues) => {
+/* const newCardPopupForm = new PopupWithForm(".card-modal", (inputValues) => {
   renderCard(inputValues);
   newCardPopupForm.close();
 });
+ */
+
+function handleNewCardServerRenderSubmit() {
+  api
+    .addNewCard({
+      name: newCardNameInput.value,
+      link: newCardImageUrlInput.value,
+    })
+    .then(
+      api.getInitialCards().then((res) => {
+        cardSection = new Section(
+          {
+            items: res,
+            renderer: renderCard,
+          },
+          ".cards"
+        );
+
+        cardSection.renderItems();
+      })
+    );
+
+  newCardPopupForm.close();
+}
+/* function handleNewCardServerRenderSubmit() {
+  api.addNewCard({
+    name: newCardNameInput.value,
+    link: newCardImageUrlInput.value,
+  });
+  api.getInitialCards().then((cardData) => {
+    cardSection = new Section(
+      {
+        items: cardData,
+        renderer: renderCard,
+      },
+      ".cards"
+    );
+
+    cardSection.renderItems();
+  });
+  newCardPopupForm.close();
+} */
+
+const newCardPopupForm = new PopupWithForm(
+  ".card-modal",
+  handleNewCardServerRenderSubmit
+);
 
 cardAddButton.addEventListener("click", () => {
   addCardFormValidator.toggleButtonState();
@@ -137,3 +214,39 @@ const editFormValidator = new FormValidator(settings, profileFormElement);
 editFormValidator.enableValidation();
 const addCardFormValidator = new FormValidator(settings, cardFormElement);
 addCardFormValidator.enableValidation();
+
+/* -------------------------------------------------------------------------- */
+/*                                  API Stuff                                 */
+/* -------------------------------------------------------------------------- */
+
+/* Fetching and rendering card data from server */
+api.getInitialCards().then((cardData) => {
+  cardSection = new Section(
+    {
+      items: cardData,
+      renderer: renderCard,
+    },
+    ".cards"
+  );
+
+  cardSection.renderItems();
+});
+
+/* Fetch and displaying User name, job bio, and profile picture */
+api.getUserInformation().then((userData) => {
+  profileTitle.textContent = userData.name;
+  profileJob.textContent = userData.about;
+  userProfileAvatar.src = userData.avatar;
+  userProfileAvatar.alt = userData.name;
+});
+
+fetch("https://around.nomoreparties.co/v1/group-12/cards", {
+  headers: {
+    authorization: "5e7676bf-611c-4ca9-9820-f740c8ee0732",
+    "Content-Type": "application/json",
+  },
+})
+  .then((result) => result.json())
+  .then((resp) => {
+    console.log(resp);
+  });
