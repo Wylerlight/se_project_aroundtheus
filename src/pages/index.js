@@ -160,19 +160,17 @@ function handleNewCardServerRenderSubmit() {
       name: newCardNameInput.value,
       link: newCardImageUrlInput.value,
     })
-    .then(
-      api.getInitialCards().then((res) => {
-        cardSection = new Section(
-          {
-            items: res,
-            renderer: renderCard,
-          },
-          ".cards"
-        );
+    .then((cardData) => {
+      cardSection = new Section(
+        {
+          items: [cardData],
+          renderer: renderCard,
+        },
+        ".cards"
+      );
 
-        cardSection.renderItems();
-      })
-    );
+      cardSection.renderItems();
+    });
 
   newCardPopupForm.close();
 }
