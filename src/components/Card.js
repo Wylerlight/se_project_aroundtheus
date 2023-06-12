@@ -1,11 +1,10 @@
 import Popup from "./Popup.js";
 
 export default class Card {
-  constructor(data, cardSelector, handleCardClick) {
+  constructor(data, cardSelector, handleCardClick, userId) {
+    this._userId = userId;
     this._cardId = data._id;
-    console.log(this._cardId);
     this._currentIdOwner = data.owner._id;
-    console.log(this._currentIdOwner);
     this._name = data.name;
     this._link = data.link;
     this._handleCardClick = handleCardClick;
@@ -16,7 +15,7 @@ export default class Card {
   handleCardTrashButton() {
     const cardTrashButton = this._element.querySelector(".card__trash-button");
 
-    if (this._currentIdOwner !== this._cardId) {
+    if (this._currentIdOwner !== this._userId) {
       cardTrashButton.remove();
     }
   }
@@ -40,7 +39,6 @@ export default class Card {
     // };
 
     cardTrashButton.addEventListener("click", () => {
-      // this._element.remove();
       verifyDeleteModal.open();
     });
 

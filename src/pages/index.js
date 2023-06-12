@@ -59,21 +59,16 @@ const userProfileAvatar = document.querySelector(".profile__avatar");
 const newCardNameInput = document.querySelector("#modal-description-title");
 const newCardImageUrlInput = document.querySelector("#modal-description-url");
 
+const submitDeleteCardContainer = document.querySelector(
+  ".card-delete-container"
+);
+
 const settings = {
   inputSelector: ".modal__field",
   submitButtonSelector: ".modal__button",
   inactiveButtonClass: "modal__button_disabled",
   inputErrorClass: "modal__field_type_error",
   errorClass: "modal__error_visible",
-};
-
-let cardSection;
-let userId;
-
-const renderCard = (item) => {
-  const addNewCard = new Card(item, "#card-template", handleCardClick, userId);
-  const cardElement = addNewCard.getCard();
-  cardSection.addItem(cardElement);
 };
 
 /* -------------------------------------------------------------------------- */
@@ -86,6 +81,15 @@ const api = new Api({
     "Content-Type": "application/json",
   },
 });
+
+let cardSection;
+let userId;
+
+const renderCard = (item) => {
+  const addNewCard = new Card(item, "#card-template", handleCardClick, userId);
+  const cardElement = addNewCard.getCard();
+  cardSection.addItem(cardElement);
+};
 
 /* -------------------------------------------------------------------------- */
 /*                              Popup Card Image                              */
@@ -161,6 +165,7 @@ function handleNewCardServerRenderSubmit() {
     .addNewCard({
       name: newCardNameInput.value,
       link: newCardImageUrlInput.value,
+      _id: userId,
     })
     .then((cardData) => {
       cardSection = new Section(
@@ -241,6 +246,7 @@ api.getInitialCards().then((cardData) => {
 
 /* Fetch and displaying User name, job bio, and profile picture */
 api.getUserInformation().then((userData) => {
+  userId = userData._id;
   profileTitle.textContent = userData.name;
   profileJob.textContent = userData.about;
   userProfileAvatar.src = userData.avatar;
