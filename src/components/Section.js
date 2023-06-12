@@ -6,12 +6,12 @@ export default class Section {
   }
 
   renderItems() {
-    this._items.forEach((item) => {
+    this._items.reverse().forEach((item) => {
       this._renderer(item);
     });
   }
-
+  //  Note for Reviewer: The .reverse() is used because the way the api pulls the card order does not remain the same order when adding a new card, then refreshing after adding a card.
   addItem(element) {
-    this._container.append(element);
+    this._container.prepend(element);
   }
 }

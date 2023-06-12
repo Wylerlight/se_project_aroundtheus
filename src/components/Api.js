@@ -3,6 +3,9 @@ export default class Api {
     this._baseUrl = baseUrl;
     this._headers = headers;
   }
+  getAppInformation() {
+    return Promise.all([this.getInitialCards(), this.getUserInformation()]);
+  }
 
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, { headers: this._headers })

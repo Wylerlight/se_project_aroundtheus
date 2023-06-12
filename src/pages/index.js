@@ -3,6 +3,7 @@ import FormValidator from "../components/FormValidator.js";
 import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
+import PopupCardDeleteVerify from "../components/PopupCardDeleteVerify.js";
 import UserInfo from "../components/UserInfo.js";
 import Api from "../components/Api.js";
 import "./index.css";
@@ -67,9 +68,10 @@ const settings = {
 };
 
 let cardSection;
+let userId;
 
 const renderCard = (item) => {
-  const addNewCard = new Card(item, "#card-template", handleCardClick);
+  const addNewCard = new Card(item, "#card-template", handleCardClick, userId);
   const cardElement = addNewCard.getCard();
   cardSection.addItem(cardElement);
 };
@@ -203,6 +205,13 @@ cardAddButton.addEventListener("click", () => {
   newCardPopupForm.open();
 });
 newCardPopupForm.setEventListeners();
+
+/* -------------------------------------------------------------------------- */
+/*                          Verify Delete Card Modal                          */
+/* -------------------------------------------------------------------------- */
+
+const cardVerifyDelete = new PopupCardDeleteVerify(".card-delete-verify");
+cardVerifyDelete.setEventListeners();
 
 /* -------------------------------------------------------------------------- */
 /*                               Form Validators                              */

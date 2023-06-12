@@ -139,6 +139,14 @@
   border-bottom: 1px solid #ff0000;
 }
 
+#modal-card-delete-verify-title {
+  padding-bottom: 38px;
+}
+
+#modal-verify-delete-card-button {
+  margin-top: 0;
+}
+
 @media screen and (max-width: 600px) {
   .modal__exit {
     bottom: calc(100% + 13px);
