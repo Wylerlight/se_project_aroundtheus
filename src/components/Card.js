@@ -40,7 +40,7 @@ export default class Card {
 
     cardTrashButton.addEventListener("click", () => {
       verifyDeleteModal.open();
-      cardId = this._cardId;
+      let cardId = this._cardId;
       return cardId;
     });
 
