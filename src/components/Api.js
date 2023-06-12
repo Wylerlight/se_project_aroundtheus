@@ -97,6 +97,26 @@ export default class Api {
         console.log("Done sending user info to server");
       });
   }
+
+  deleteCardRequest(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
+      method: "DELETE",
+      headers: this._headers,
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        // if the server returns an error, reject the promise
+        return Promise.reject(`Error: ${res.status}`);
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => {
+        console.log("Done deleting card");
+      });
+  }
 }
 
 /* -------------------------------------------------------------------------- */
@@ -112,3 +132,5 @@ export default class Api {
 // PATCH https://around.nomoreparties.co/v1/group-12/users/me
 // Adding new card
 // POST https://around.nomoreparties.co/v1/group-12/cards
+// Delete card request
+// DELETE https://around.nomoreparties.co/v1/group-12/cards/cardId

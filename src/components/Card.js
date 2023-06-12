@@ -1,13 +1,14 @@
 import Popup from "./Popup.js";
 
 export default class Card {
-  constructor(data, cardSelector, handleCardClick, userId) {
+  constructor(data, cardSelector, handleCardClick, userId, handleDeleteCard) {
     this._userId = userId;
     this._cardId = data._id;
     this._currentIdOwner = data.owner._id;
     this._name = data.name;
     this._link = data.link;
     this._handleCardClick = handleCardClick;
+    this._handleDeleteCard = handleDeleteCard;
 
     this._cardSelector = cardSelector;
   }
@@ -30,6 +31,9 @@ export default class Card {
     this._likeButton = this._element.querySelector(".card__button");
     const cardTrashButton = this._element.querySelector(".card__trash-button");
     const verifyDeleteModal = new Popup(".card-delete-verify");
+    const verifyDeleteButton = document.querySelector(
+      "#modal-verify-delete-card-button"
+    );
 
     this._likeButton.addEventListener("click", () => {
       this._likeButton.classList.toggle("card__like-active");
@@ -40,8 +44,13 @@ export default class Card {
 
     cardTrashButton.addEventListener("click", () => {
       verifyDeleteModal.open();
-      let cardId = this._cardId;
-      return cardId;
+      verifyDeleteModal.setEventListeners();
+
+      verifyDeleteButton.addEventListener("click", (evt) => {
+        evt.preventDefault();
+        console.log(this._cardId);
+        this._handleDeleteCard(this._cardId, this._element.remove());
+      });
     });
 
     this._cardImageElement.addEventListener("click", () => {

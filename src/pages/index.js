@@ -1,6 +1,7 @@
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import Section from "../components/Section.js";
+import Popup from "../components/Popup.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import PopupCardDeleteVerify from "../components/PopupCardDeleteVerify.js";
@@ -85,8 +86,27 @@ const api = new Api({
 let cardSection;
 let userId;
 
+/* -------------------------------------------------------------------------- */
+/*                          Verify Delete Card Modal                          */
+/* -------------------------------------------------------------------------- */
+
+const deleteModalPopup = new Popup(".card-delete-verify");
+
+function handleDeleteCard(cardId, elementRemove) {
+  api
+    .deleteCardRequest(cardId)
+    .then(elementRemove)
+    .then(deleteModalPopup.close());
+}
+
 const renderCard = (item) => {
-  const addNewCard = new Card(item, "#card-template", handleCardClick, userId);
+  const addNewCard = new Card(
+    item,
+    "#card-template",
+    handleCardClick,
+    userId,
+    handleDeleteCard
+  );
   const cardElement = addNewCard.getCard();
   cardSection.addItem(cardElement);
 };
@@ -215,9 +235,9 @@ newCardPopupForm.setEventListeners();
 /*                          Verify Delete Card Modal                          */
 /* -------------------------------------------------------------------------- */
 
-const cardVerifyDelete = new PopupCardDeleteVerify(".card-delete-verify");
+/* const cardVerifyDelete = new PopupCardDeleteVerify(".card-delete-verify");
 cardVerifyDelete.setEventListeners();
-
+ */
 /* -------------------------------------------------------------------------- */
 /*                               Form Validators                              */
 /* -------------------------------------------------------------------------- */
@@ -253,7 +273,7 @@ api.getUserInformation().then((userData) => {
   userProfileAvatar.alt = userData.name;
 });
 
-fetch("https://around.nomoreparties.co/v1/group-12/cards", {
+/* fetch("https://around.nomoreparties.co/v1/group-12/cards", {
   headers: {
     authorization: "5e7676bf-611c-4ca9-9820-f740c8ee0732",
     "Content-Type": "application/json",
@@ -262,4 +282,32 @@ fetch("https://around.nomoreparties.co/v1/group-12/cards", {
   .then((result) => result.json())
   .then((resp) => {
     console.log(resp);
+  }); */
+
+/* fetch(
+  `https://around.nomoreparties.co/v1/group-12/cards/6487619a56407e0828f07930`,
+  {
+    method: "DELETE",
+    headers: {
+      authorization: "5e7676bf-611c-4ca9-9820-f740c8ee0732",
+      "Content-Type": "application/json",
+    },
+  }
+)
+  .then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+    // if the server returns an error, reject the promise
+    return Promise.reject(`Error: ${res.status}`);
+  })
+  .then((response) => {
+    console.log(response);
+  })
+  .catch((err) => {
+    console.error(err);
+  })
+  .finally(() => {
+    console.log("Done deleting card");
   });
+ */
