@@ -90,14 +90,19 @@ let userId;
 /*                          Verify Delete Card Modal                          */
 /* -------------------------------------------------------------------------- */
 
-const deleteModalPopup = new Popup(".card-delete-verify");
+// const deleteModalPopup = new Popup(".card-delete-verify");
 
-function handleDeleteCard(cardId, elementRemove) {
-  api
-    .deleteCardRequest(cardId)
-    .then(elementRemove)
-    .then(deleteModalPopup.close());
-}
+const cardVerifyDelete = new PopupCardDeleteVerify(".card-delete-verify");
+cardVerifyDelete.setEventListeners(); // handle esc, overly and X close functions
+
+const handleDeleteCard = (cardId, element) => {
+  cardVerifyDelete.setSubmitAction(() => {
+    api
+      .deleteCardRequest(cardId)
+      .then(element.remove())
+      .then(cardVerifyDelete.close());
+  });
+};
 
 const renderCard = (item) => {
   const addNewCard = new Card(

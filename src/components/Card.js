@@ -31,26 +31,14 @@ export default class Card {
     this._likeButton = this._element.querySelector(".card__button");
     const cardTrashButton = this._element.querySelector(".card__trash-button");
     const verifyDeleteModal = new Popup(".card-delete-verify");
-    const verifyDeleteButton = document.querySelector(
-      "#modal-verify-delete-card-button"
-    );
 
     this._likeButton.addEventListener("click", () => {
       this._likeButton.classList.toggle("card__like-active");
     });
-    // _toggleLike = () => {
-    //   this._likeButton.classList.toggle("card__like-active");
-    // };
 
     cardTrashButton.addEventListener("click", () => {
       verifyDeleteModal.open();
-      verifyDeleteModal.setEventListeners();
-
-      verifyDeleteButton.addEventListener("click", (evt) => {
-        evt.preventDefault();
-        console.log(this._cardId);
-        this._handleDeleteCard(this._cardId, this._element.remove());
-      });
+      this._handleDeleteCard(this._cardId, this._element);
     });
 
     this._cardImageElement.addEventListener("click", () => {
