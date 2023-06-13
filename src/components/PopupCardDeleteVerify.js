@@ -9,7 +9,7 @@ export default class PopupCardDeleteVerify extends Popup {
     this._something = this._popupElement.querySelector(
       "#modal-verify-delete-card-button"
     );
-    this._handleFormSubmit = handleFormSubmit.bind(this);
+    this._handleFormSubmit = handleFormSubmit;
   }
 
   _handleSubmitFunction(evt) {
