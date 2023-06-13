@@ -99,7 +99,7 @@ const handleDeleteCard = (cardId, element) => {
   cardVerifyDelete.setSubmitAction(() => {
     api
       .deleteCardRequest(cardId)
-      .then(element.remove())
+      .then(console.log(element), element.remove())
       .then(cardVerifyDelete.close());
   });
 };
