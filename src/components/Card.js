@@ -27,7 +27,6 @@ export default class Card {
 
     this._updateLikes = updateLikes;
 
-    // this.showCardLikes = this.showCardLikes.bind(this);
     this.cardIsLiked = this.cardIsLiked.bind(this);
   }
 
@@ -40,7 +39,8 @@ export default class Card {
   }
 
   updateLike(result) {
-    this._cardData = result;
+    this._cardLikes = result;
+    this.showCardLikes();
     console.log("updateLike in Card.js was run");
   }
 
@@ -48,6 +48,18 @@ export default class Card {
     if (this._cardLikes.length > 0) {
       this._element.querySelector(".card__like-counter").textContent =
         this._cardLikes.length;
+    } else {
+      this._element.querySelector(".card__like-counter").textContent = "";
+    }
+
+    if (this.cardIsLiked()) {
+      this._element
+        .querySelector(".card__button")
+        .classList.add("card__like-active");
+    } else {
+      this._element
+        .querySelector(".card__button")
+        .classList.remove("card__like-active");
     }
 
     /*  this._element

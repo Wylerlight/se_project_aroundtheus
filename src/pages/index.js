@@ -104,23 +104,9 @@ const handleDeleteCard = (cardId, element) => {
 
 const handleCardLike = (card) => {
   if (card.cardIsLiked()) {
-    console.log("like remove api run");
-    console.log(card, "card  run");
-    console.log(card._cardData, "cardData  run");
-
-    console.log(card._cardLikes, "cardLikes  run");
-    console.log(card._cardId, "cardId  run");
-    console.log(card._userId, "userId  run");
-
-    api
-      .likesCountRemove(card._cardId)
-      .then(() => {
-        console.log("res from api.likesCountRemove of removing card api");
-        card.updateLike((result) => {
-          return result;
-        });
-      })
-      .then();
+    api.likesCountRemove(card._cardId).then((res) => {
+      card.updateLike(res);
+    });
 
     /* api.likesCountRemove(card._cardId).then((responseRemove) => {
       console.log(responseRemove);
@@ -128,23 +114,9 @@ const handleCardLike = (card) => {
       card.updateLike(responseRemove._id);
     }); */
   } else {
-    console.log("Like added api run");
-    console.log(card, "card  run");
-    console.log(card._cardData, "cardData  run");
-
-    console.log(card._cardLikes, "cardLikes  run");
-    console.log(card._cardId, "cardId  run");
-    console.log(card._userId, "userId  run");
-
-    api
-      .likesCountAdd(card._cardId)
-      .then(() => {
-        console.log("res from api.likesCountAdd of adding card api");
-        card.updateLike((result) => {
-          return result;
-        });
-      })
-      .then();
+    api.likesCountAdd(card._cardId).then((res) => {
+      card.updateLike(res);
+    });
     /* api
       .likesCountAdd(card._cardId)
       .then((responseAdd) => {
