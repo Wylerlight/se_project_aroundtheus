@@ -98,7 +98,7 @@ export default class Card {
 
     this._setEventListeners();
     this.handleCardTrashButton();
-    // this.showCardLikes();
+    this.showCardLikes();
 
     return this._element;
   }
