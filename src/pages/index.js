@@ -90,18 +90,69 @@ let userId;
 /*                          Verify Delete Card Modal                          */
 /* -------------------------------------------------------------------------- */
 
-// const deleteModalPopup = new Popup(".card-delete-verify");
-
 const cardVerifyDelete = new PopupCardDeleteVerify(".card-delete-verify");
-cardVerifyDelete.setEventListeners(); // handle esc, overly and X close functions
+cardVerifyDelete.setEventListeners();
 
 const handleDeleteCard = (cardId, element) => {
   cardVerifyDelete.setSubmitAction(() => {
     api
       .deleteCardRequest(cardId)
-      .then(console.log(element), element.remove())
+      .then(element.remove())
       .then(cardVerifyDelete.close());
   });
+};
+
+const handleCardLike = (card) => {
+  if (card.cardIsLiked()) {
+    console.log("like remove api run");
+    console.log(card, "card  run");
+    console.log(card._cardData, "cardData  run");
+
+    console.log(card._cardLikes, "cardLikes  run");
+    console.log(card._cardId, "cardId  run");
+    console.log(card._userId, "userId  run");
+
+    api
+      .likesCountRemove(card._cardId)
+      .then(() => {
+        console.log("res from api.likesCountRemove of removing card api");
+        card.updateLike((result) => {
+          return result;
+        });
+      })
+      .then();
+
+    /* api.likesCountRemove(card._cardId).then((responseRemove) => {
+      console.log(responseRemove);
+      card.updateLike();
+      card.updateLike(responseRemove._id);
+    }); */
+  } else {
+    console.log("Like added api run");
+    console.log(card, "card  run");
+    console.log(card._cardData, "cardData  run");
+
+    console.log(card._cardLikes, "cardLikes  run");
+    console.log(card._cardId, "cardId  run");
+    console.log(card._userId, "userId  run");
+
+    api
+      .likesCountAdd(card._cardId)
+      .then(() => {
+        console.log("res from api.likesCountAdd of adding card api");
+        card.updateLike((result) => {
+          return result;
+        });
+      })
+      .then();
+    /* api
+      .likesCountAdd(card._cardId)
+      .then((responseAdd) => {
+        console.log(responseAdd);
+        console.log(card);
+      })
+      .then(console.log("Like added to card")); */
+  }
 };
 
 const renderCard = (item) => {
@@ -110,7 +161,8 @@ const renderCard = (item) => {
     "#card-template",
     handleCardClick,
     userId,
-    handleDeleteCard
+    handleDeleteCard,
+    handleCardLike
   );
   const cardElement = addNewCard.getCard();
   cardSection.addItem(cardElement);
@@ -251,6 +303,11 @@ const editFormValidator = new FormValidator(settings, profileFormElement);
 editFormValidator.enableValidation();
 const addCardFormValidator = new FormValidator(settings, cardFormElement);
 addCardFormValidator.enableValidation();
+const deleteCardVerifyValidator = new FormValidator(
+  settings,
+  submitDeleteCardContainer
+);
+deleteCardVerifyValidator.enableValidation();
 
 /* -------------------------------------------------------------------------- */
 /*                                  API Stuff                                 */
@@ -278,7 +335,7 @@ api.getUserInformation().then((userData) => {
   userProfileAvatar.alt = userData.name;
 });
 
-/* fetch("https://around.nomoreparties.co/v1/group-12/cards", {
+fetch("https://around.nomoreparties.co/v1/group-12/cards", {
   headers: {
     authorization: "5e7676bf-611c-4ca9-9820-f740c8ee0732",
     "Content-Type": "application/json",
@@ -287,7 +344,7 @@ api.getUserInformation().then((userData) => {
   .then((result) => result.json())
   .then((resp) => {
     console.log(resp);
-  }); */
+  });
 
 /* fetch(
   `https://around.nomoreparties.co/v1/group-12/cards/6487619a56407e0828f07930`,

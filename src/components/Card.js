@@ -1,7 +1,17 @@
 import Popup from "./Popup.js";
 
 export default class Card {
-  constructor(data, cardSelector, handleCardClick, userId, handleDeleteCard) {
+  constructor(
+    data,
+    cardSelector,
+    handleCardClick,
+    userId,
+    handleDeleteCard,
+    handleCardLike,
+    updateLikes
+  ) {
+    this._cardData = data;
+    // console.log(data);
     this._userId = userId;
     this._cardId = data._id;
     this._currentIdOwner = data.owner._id;
@@ -10,7 +20,15 @@ export default class Card {
     this._handleCardClick = handleCardClick;
     this._handleDeleteCard = handleDeleteCard;
 
+    this._handleCardLike = handleCardLike;
+    this._cardLikes = data.likes;
+
     this._cardSelector = cardSelector;
+
+    this._updateLikes = updateLikes;
+
+    // this.showCardLikes = this.showCardLikes.bind(this);
+    this.cardIsLiked = this.cardIsLiked.bind(this);
   }
 
   handleCardTrashButton() {
@@ -21,6 +39,28 @@ export default class Card {
     }
   }
 
+  updateLike(result) {
+    this._cardData = result;
+    console.log("updateLike in Card.js was run");
+  }
+
+  showCardLikes() {
+    if (this._cardLikes.length > 0) {
+      this._element.querySelector(".card__like-counter").textContent =
+        this._cardLikes.length;
+    }
+
+    /*  this._element
+      .querySelector(".card__button")
+      .classList.toggle("card__like-active", this.cardIsLiked()); */
+  }
+
+  cardIsLiked() {
+    return this._cardLikes.some((likes) => {
+      return likes._id === this._userId;
+    });
+  }
+
   _getTemplate() {
     return document
       .querySelector(this._cardSelector)
@@ -28,13 +68,9 @@ export default class Card {
   }
 
   _setEventListeners() {
-    this._likeButton = this._element.querySelector(".card__button");
+    const cardLikeButton = this._element.querySelector(".card__button");
     const cardTrashButton = this._element.querySelector(".card__trash-button");
     const verifyDeleteModal = new Popup(".card-delete-verify");
-
-    this._likeButton.addEventListener("click", () => {
-      this._likeButton.classList.toggle("card__like-active");
-    });
 
     cardTrashButton.addEventListener("click", () => {
       verifyDeleteModal.open();
@@ -43,6 +79,11 @@ export default class Card {
 
     this._cardImageElement.addEventListener("click", () => {
       this._handleCardClick(this._cardImageElement);
+    });
+
+    cardLikeButton.addEventListener("click", () => {
+      console.log("card like clicked");
+      this._handleCardLike(this);
     });
   }
 
@@ -57,6 +98,7 @@ export default class Card {
 
     this._setEventListeners();
     this.handleCardTrashButton();
+    // this.showCardLikes();
 
     return this._element;
   }

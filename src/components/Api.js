@@ -117,6 +117,54 @@ export default class Api {
         console.log("Done deleting card");
       });
   }
+
+  likesCountAdd(cardId) {
+    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+      method: "PUT",
+      headers: this._headers,
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        // if the server returns an error, reject the promise
+        return Promise.reject(`Error: ${res.status}`);
+      })
+      .then((result) => {
+        console.log(result, "result from add count Api.js");
+        return result;
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => {
+        console.log("Done adding like");
+      });
+  }
+
+  likesCountRemove(cardId) {
+    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+      method: "DELETE",
+      headers: this._headers,
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        // if the server returns an error, reject the promise
+        return Promise.reject(`Error: ${res.status}`);
+      })
+      .then((result) => {
+        console.log(result, "result from remove count Api.js");
+        return result;
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => {
+        console.log("Done deleting like");
+      });
+  }
 }
 
 /* -------------------------------------------------------------------------- */
@@ -134,3 +182,7 @@ export default class Api {
 // POST https://around.nomoreparties.co/v1/group-12/cards
 // Delete card request
 // DELETE https://around.nomoreparties.co/v1/group-12/cards/cardId
+// Request to like cards
+// PUT https://around.nomoreparties.co/v1/group-12/cards/likes/cardId
+// Remove/delete like
+// DELETE https://around.nomoreparties.co/v1/group-12/cards/likes/cardId

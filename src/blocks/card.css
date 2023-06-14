@@ -58,6 +58,12 @@
   background: url(../images/heart-active.svg);
 }
 
+.card__like-counter {
+  color: #000;
+  padding: none;
+  margin: 0;
+}
+
 .card__trash-button {
   background: transparent url(../images/Trash.svg) center no-repeat;
   position: absolute;
