@@ -10,6 +10,8 @@ export default class Card {
     handleCardLike,
     updateLikes
   ) {
+    this._data = data;
+
     this._userId = userId;
     this._cardId = data._id;
     this._currentIdOwner = data.owner._id;
@@ -49,7 +51,7 @@ export default class Card {
       this._element.querySelector(".card__like-counter").textContent = "";
     }
 
-    if ((console.log(this["_cardLikes"].likes), this.cardIsLiked())) {
+    if (this.cardIsLiked()) {
       this._element
         .querySelector(".card__button")
         .classList.add("card__like-active");
@@ -65,7 +67,6 @@ export default class Card {
   }
 
   cardIsLiked() {
-    console.log(this._cardLikes);
     return this._cardLikes.some((likes) => {
       return likes._id === this._userId;
     });
@@ -93,7 +94,7 @@ export default class Card {
 
     cardLikeButton.addEventListener("click", () => {
       console.log("card like clicked");
-      this._handleCardLike(this);
+      this._handleCardLike(this._data);
     });
   }
 
