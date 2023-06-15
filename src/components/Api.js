@@ -131,7 +131,6 @@ export default class Api {
         return Promise.reject(`Error: ${res.status}`);
       })
       .then((result) => {
-        console.log(result, "result from add count Api.js");
         return result;
       })
       .catch((err) => {
@@ -155,7 +154,6 @@ export default class Api {
         return Promise.reject(`Error: ${res.status}`);
       })
       .then((result) => {
-        console.log(result, "result from remove count Api.js");
         return result;
       })
       .catch((err) => {

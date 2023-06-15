@@ -10,8 +10,6 @@ export default class Card {
     handleCardLike,
     updateLikes
   ) {
-    this._data = data;
-
     this._userId = userId;
     this._cardId = data._id;
     this._currentIdOwner = data.owner._id;
@@ -39,7 +37,7 @@ export default class Card {
   }
 
   updateLike(result) {
-    this._cardLikes = result;
+    this._cardLikes = result.likes;
     this.showCardLikes();
   }
 
@@ -93,8 +91,7 @@ export default class Card {
     });
 
     cardLikeButton.addEventListener("click", () => {
-      console.log("card like clicked");
-      this._handleCardLike(this._data);
+      this._handleCardLike(this);
     });
   }
 

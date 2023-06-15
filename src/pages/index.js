@@ -103,7 +103,6 @@ const handleDeleteCard = (cardId, element) => {
 };
 
 const handleCardLike = (card) => {
-  // console.log(card);
   if (card.cardIsLiked()) {
     api.likesCountRemove(card._cardId).then((res) => {
       card.updateLike(res);
