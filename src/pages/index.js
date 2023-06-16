@@ -161,20 +161,6 @@ function handleCardClick(data) {
 }
 
 /* -------------------------------------------------------------------------- */
-/*                         Initial Card Render Section                        */
-/* -------------------------------------------------------------------------- */
-
-// const cardSection = new Section(
-//   {
-//     items: initialCards,
-//     renderer: renderCard,
-//   },
-//   ".cards"
-// );
-
-// cardSection.renderItems();
-
-/* -------------------------------------------------------------------------- */
 /*                          Form Popup : Edit Profile                         */
 /* -------------------------------------------------------------------------- */
 function handleProfileFormSubmit() {
