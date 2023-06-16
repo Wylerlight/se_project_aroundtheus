@@ -24,6 +24,7 @@
   align-items: center;
   border-radius: 0 0 10px 10px;
   padding: 25px 20px;
+  max-height: 79px;
 }
 
 .card__title {
@@ -47,6 +48,7 @@
   border: none;
   padding: 0;
   transition: 0.5s;
+  margin-bottom: 3px;
 }
 
 .card__button:hover {
@@ -62,6 +64,8 @@
   color: #000;
   padding: none;
   margin: 0;
+  font-size: 13px;
+  text-align: center;
 }
 
 .card__trash-button {

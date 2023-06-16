@@ -11,6 +11,11 @@
     "description description";
   grid-template-columns: minmax(auto, 373px) auto;
   gap: 7px 18px;
+  margin-left: 30px;
+}
+
+.profile__avatar-conatainer {
+  position: relative;
 }
 
 .profile__avatar {
@@ -18,7 +23,29 @@
   height: 120px;
   width: 120px;
   align-self: center;
-  margin-right: 30px;
+  transition: 0.5s ease;
+  backface-visibility: hidden;
+  opacity: 1;
+}
+
+.profile__avatar-edit {
+  background: transparent url(../images/edit-avatar-pencil.svg) center no-repeat;
+  width: 26px;
+  height: 26px;
+  border: none;
+  position: absolute;
+  top: 47px;
+  left: 47px;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.profile__avatar-conatainer:hover .profile__avatar-edit {
+  cursor: pointer;
+  opacity: 1;
+}
+.profile__avatar-conatainer:hover .profile__avatar {
+  opacity: 0.2;
 }
 
 .profile__title {

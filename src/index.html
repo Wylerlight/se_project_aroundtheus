@@ -18,7 +18,10 @@
       </header>
       <main class="content">
         <section class="profile page__section">
-          <img src="" alt="" class="profile__avatar" />
+          <div class="profile__avatar-conatainer">
+            <img src="" alt="" class="profile__avatar" />
+            <button class="profile__avatar-edit" type="button"></button>
+          </div>
           <div class="profile__info">
             <h1 class="profile__title"></h1>
             <button class="profile__button-edit" type="button"></button>
@@ -125,7 +128,13 @@
             required
           />
           <span class="modal-description-job-error"></span>
-          <button class="modal__button" type="submit">Save</button>
+          <button
+            class="modal__button"
+            id="modal-edit-profile-button"
+            type="submit"
+          >
+            Save
+          </button>
         </form>
       </section>
     </div>
@@ -156,7 +165,11 @@
             required
           />
           <span class="modal-description-url-error"></span>
-          <button class="modal__button card-submit-button" type="submit">
+          <button
+            class="modal__button card-submit-button"
+            id="modal-add-card-button"
+            type="submit"
+          >
             Create
           </button>
         </form>
@@ -178,6 +191,33 @@
           Yes
         </button>
       </form>
+    </div>
+
+    <!-- EDIT AVATAR PICTURE MODAL -->
+
+    <div class="modal avatar__modal">
+      <section class="modal__container">
+        <button class="modal__exit" type="button"></button>
+        <h2 class="modal__title">Change profile picture</h2>
+        <form class="modal__form avatar__image-input">
+          <input
+            id="modal-avatar-url"
+            class="modal__field"
+            name="avatar"
+            type="url"
+            placeholder="Image link"
+            required
+          />
+          <span class="modal-avatar-url-error"></span>
+          <button
+            class="modal__button"
+            id="modal-avatar-image-save"
+            type="submit"
+          >
+            Save
+          </button>
+        </form>
+      </section>
     </div>
 
     <!-- Image Popup -->

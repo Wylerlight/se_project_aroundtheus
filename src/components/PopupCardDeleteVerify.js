@@ -3,9 +3,7 @@ import Popup from "./Popup.js";
 export default class PopupCardDeleteVerify extends Popup {
   constructor(popupSelector, handleFormSubmit) {
     super(popupSelector);
-    /* this._verifyDeleteCardButton = this._popupElement.querySelector(
-      ".card-delete-container"
-    ); */
+
     this._verifyDeleteCardButton = this._popupElement.querySelector(
       "#modal-verify-delete-card-button"
     );

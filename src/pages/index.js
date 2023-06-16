@@ -64,6 +64,17 @@ const submitDeleteCardContainer = document.querySelector(
   ".card-delete-container"
 );
 
+const profileAvatarEditButton = document.querySelector(".profile__avatar-edit");
+const avatarChangeContainer = document.querySelector(".avatar__modal");
+const avatarFormElement = avatarChangeContainer.querySelector(
+  ".avatar__image-input"
+);
+const avatarChangeSaveButton = avatarChangeContainer.querySelector(
+  "#modal-avatar-image-save"
+);
+const avatarImageInput =
+  avatarChangeContainer.querySelector("#modal-avatar-url");
+
 const settings = {
   inputSelector: ".modal__field",
   submitButtonSelector: ".modal__button",
@@ -71,6 +82,18 @@ const settings = {
   inputErrorClass: "modal__field_type_error",
   errorClass: "modal__error_visible",
 };
+
+/* -------------------------------------------------------------------------- */
+/*                            MODAL SUBMIT BUTTONS                            */
+/* -------------------------------------------------------------------------- */
+
+const submitButtonEditProfileInfo = document.querySelector(
+  "#modal-edit-profile-button"
+);
+const submitButtonAddNewCard = document.querySelector("#modal-add-card-button");
+const submitButtonChangeAvatar = document.querySelector(
+  "#modal-avatar-image-save"
+);
 
 /* -------------------------------------------------------------------------- */
 /*                                API Constant                                */
@@ -107,23 +130,10 @@ const handleCardLike = (card) => {
     api.likesCountRemove(card._cardId).then((res) => {
       card.updateLike(res);
     });
-
-    /* api.likesCountRemove(card._cardId).then((responseRemove) => {
-      console.log(responseRemove);
-      card.updateLike();
-      card.updateLike(responseRemove._id);
-    }); */
   } else {
     api.likesCountAdd(card._cardId).then((res) => {
       card.updateLike(res);
     });
-    /* api
-      .likesCountAdd(card._cardId)
-      .then((responseAdd) => {
-        console.log(responseAdd);
-        console.log(card);
-      })
-      .then(console.log("Like added to card")); */
   }
 };
 
@@ -168,6 +178,8 @@ function handleCardClick(data) {
 /*                          Form Popup : Edit Profile                         */
 /* -------------------------------------------------------------------------- */
 function handleProfileFormSubmit() {
+  submitButtonEditProfileInfo.textContent = "Saaving...";
+  // select submit button on form change text content to Saving...
   api
     .editProfileInformation({ name: titleInput.value, about: jobInput.value })
     .then((newUserData) => {
@@ -175,6 +187,9 @@ function handleProfileFormSubmit() {
       profileJob.textContent = newUserData.about;
       userProfileAvatar.src = newUserData.avatar;
       userProfileAvatar.alt = newUserData.name;
+    })
+    .finally(() => {
+      submitButtonEditProfileInfo.textContent = "Save";
     });
   profilePopupForm.close();
 }
@@ -203,13 +218,8 @@ profileEditButton.addEventListener("click", () => {
 /*                        Form Popup : Adding New Card                        */
 /* -------------------------------------------------------------------------- */
 
-/* const newCardPopupForm = new PopupWithForm(".card-modal", (inputValues) => {
-  renderCard(inputValues);
-  newCardPopupForm.close();
-});
- */
-
 function handleNewCardServerRenderSubmit() {
+  submitButtonAddNewCard.textContent = "Saving...";
   api
     .addNewCard({
       name: newCardNameInput.value,
@@ -226,28 +236,13 @@ function handleNewCardServerRenderSubmit() {
       );
 
       cardSection.renderItems();
+    })
+    .finally(() => {
+      submitButtonAddNewCard.textContent = "Create";
     });
 
   newCardPopupForm.close();
 }
-/* function handleNewCardServerRenderSubmit() {
-  api.addNewCard({
-    name: newCardNameInput.value,
-    link: newCardImageUrlInput.value,
-  });
-  api.getInitialCards().then((cardData) => {
-    cardSection = new Section(
-      {
-        items: cardData,
-        renderer: renderCard,
-      },
-      ".cards"
-    );
-
-    cardSection.renderItems();
-  });
-  newCardPopupForm.close();
-} */
 
 const newCardPopupForm = new PopupWithForm(
   ".card-modal",
@@ -261,13 +256,6 @@ cardAddButton.addEventListener("click", () => {
 newCardPopupForm.setEventListeners();
 
 /* -------------------------------------------------------------------------- */
-/*                          Verify Delete Card Modal                          */
-/* -------------------------------------------------------------------------- */
-
-/* const cardVerifyDelete = new PopupCardDeleteVerify(".card-delete-verify");
-cardVerifyDelete.setEventListeners();
- */
-/* -------------------------------------------------------------------------- */
 /*                               Form Validators                              */
 /* -------------------------------------------------------------------------- */
 
@@ -280,6 +268,8 @@ const deleteCardVerifyValidator = new FormValidator(
   submitDeleteCardContainer
 );
 deleteCardVerifyValidator.enableValidation();
+const avatarImageFormValidator = new FormValidator(settings, avatarFormElement);
+avatarImageFormValidator.enableValidation();
 
 /* -------------------------------------------------------------------------- */
 /*                                  API Stuff                                 */
@@ -304,10 +294,42 @@ api.getUserInformation().then((userData) => {
   profileTitle.textContent = userData.name;
   profileJob.textContent = userData.about;
   userProfileAvatar.src = userData.avatar;
-  userProfileAvatar.alt = userData.name;
 });
 
-fetch("https://around.nomoreparties.co/v1/group-12/cards", {
+/* -------------------------------------------------------------------------- */
+/*                      Avatar picture change popup form                      */
+/* -------------------------------------------------------------------------- */
+
+function handleAvatarImageServerSubmit() {
+  submitButtonChangeAvatar.textContent = "Saving...";
+  api
+    .updateProfilePicture({ avatar: avatarImageInput.value })
+    .then((response) => {
+      console.log(response);
+      userProfileAvatar.src = response.avatar;
+    })
+    .finally(() => {
+      submitButtonChangeAvatar.textContent = "Save";
+    });
+  avatarChangeFormPoup.close();
+}
+
+const avatarChangeFormPoup = new PopupWithForm(
+  ".avatar__modal",
+  handleAvatarImageServerSubmit
+);
+
+profileAvatarEditButton.addEventListener("click", () => {
+  avatarImageFormValidator.toggleButtonState();
+  avatarChangeFormPoup.open();
+});
+avatarChangeFormPoup.setEventListeners();
+
+/* -------------------------------------------------------------------------- */
+/*                          Random API Fetch checkers                         */
+/* -------------------------------------------------------------------------- */
+
+fetch("https://around.nomoreparties.co/v1/group-12/users/me", {
   headers: {
     authorization: "5e7676bf-611c-4ca9-9820-f740c8ee0732",
     "Content-Type": "application/json",
