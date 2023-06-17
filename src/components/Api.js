@@ -1,4 +1,4 @@
-/* export default class Api {
+export default class Api {
   constructor({ baseUrl, headers }) {
     this._baseUrl = baseUrl;
     this._headers = headers;
@@ -190,7 +190,7 @@
       });
   }
 }
-*/
+
 /* -------------------------------------------------------------------------- */
 /*                example of what it will look like in index.js               */
 /* -------------------------------------------------------------------------- */

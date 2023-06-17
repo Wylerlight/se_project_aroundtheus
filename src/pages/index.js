@@ -87,18 +87,18 @@ const settings = {
 /*                            MODAL SUBMIT BUTTONS                            */
 /* -------------------------------------------------------------------------- */
 
-/* const submitButtonEditProfileInfo = document.querySelector(
+const submitButtonEditProfileInfo = document.querySelector(
   "#modal-edit-profile-button"
 );
 const submitButtonAddNewCard = document.querySelector("#modal-add-card-button");
 const submitButtonChangeAvatar = document.querySelector(
   "#modal-avatar-image-save"
 );
- */
+
 /* -------------------------------------------------------------------------- */
 /*                                API Constant                                */
 /* -------------------------------------------------------------------------- */
-/* const api = new Api({
+const api = new Api({
   baseUrl: "https://around.nomoreparties.co/v1/group-12",
   headers: {
     authorization: "5e7676bf-611c-4ca9-9820-f740c8ee0732",
@@ -107,12 +107,12 @@ const submitButtonChangeAvatar = document.querySelector(
 });
 
 let cardSection;
-let userId; */
+let userId;
 
 /* -------------------------------------------------------------------------- */
 /*                          Verify Delete Card Modal                          */
 /* -------------------------------------------------------------------------- */
-/* 
+
 const cardVerifyDelete = new PopupCardDeleteVerify(".card-delete-verify");
 cardVerifyDelete.setEventListeners();
 
@@ -148,7 +148,7 @@ const renderCard = (item) => {
   );
   const cardElement = addNewCard.getCard();
   cardSection.addItem(cardElement);
-}; */
+};
 
 /* -------------------------------------------------------------------------- */
 /*                              Popup Card Image                              */
@@ -163,7 +163,7 @@ function handleCardClick(data) {
 /* -------------------------------------------------------------------------- */
 /*                          Form Popup : Edit Profile                         */
 /* -------------------------------------------------------------------------- */
-/* function handleProfileFormSubmit() {
+function handleProfileFormSubmit() {
   submitButtonEditProfileInfo.textContent = "Saaving...";
   // select submit button on form change text content to Saving...
   api
@@ -178,18 +178,18 @@ function handleCardClick(data) {
       submitButtonEditProfileInfo.textContent = "Save";
     });
   profilePopupForm.close();
-} */
+}
 
 const userInfo = new UserInfo({
   userNameSelector: ".profile__title",
   userJobSelector: ".profile__description",
 });
 
-/* const profilePopupForm = new PopupWithForm(
+const profilePopupForm = new PopupWithForm(
   ".profile-modal",
   handleProfileFormSubmit
 );
-profilePopupForm.setEventListeners(); */
+profilePopupForm.setEventListeners();
 
 profileEditButton.addEventListener("click", () => {
   const userData = userInfo.getUserInfo();
@@ -204,7 +204,7 @@ profileEditButton.addEventListener("click", () => {
 /*                        Form Popup : Adding New Card                        */
 /* -------------------------------------------------------------------------- */
 
-/* function handleNewCardServerRenderSubmit() {
+function handleNewCardServerRenderSubmit() {
   submitButtonAddNewCard.textContent = "Saving...";
   api
     .addNewCard({
@@ -233,7 +233,7 @@ profileEditButton.addEventListener("click", () => {
 const newCardPopupForm = new PopupWithForm(
   ".card-modal",
   handleNewCardServerRenderSubmit
-); */
+);
 
 cardAddButton.addEventListener("click", () => {
   addCardFormValidator.toggleButtonState();
@@ -249,21 +249,20 @@ const editFormValidator = new FormValidator(settings, profileFormElement);
 editFormValidator.enableValidation();
 const addCardFormValidator = new FormValidator(settings, cardFormElement);
 addCardFormValidator.enableValidation();
-
-/* const deleteCardVerifyValidator = new FormValidator(
+const deleteCardVerifyValidator = new FormValidator(
   settings,
   submitDeleteCardContainer
 );
 deleteCardVerifyValidator.enableValidation();
 const avatarImageFormValidator = new FormValidator(settings, avatarFormElement);
 avatarImageFormValidator.enableValidation();
- */
+
 /* -------------------------------------------------------------------------- */
 /*                                  API Stuff                                 */
 /* -------------------------------------------------------------------------- */
 
 /* Fetching and rendering card data from server */
-/* api.getInitialCards().then((cardData) => {
+api.getInitialCards().then((cardData) => {
   cardSection = new Section(
     {
       items: cardData,
@@ -274,20 +273,20 @@ avatarImageFormValidator.enableValidation();
 
   cardSection.renderItems();
 });
- */
+
 /* Fetch and displaying User name, job bio, and profile picture */
-/* api.getUserInformation().then((userData) => {
+api.getUserInformation().then((userData) => {
   userId = userData._id;
   profileTitle.textContent = userData.name;
   profileJob.textContent = userData.about;
   userProfileAvatar.src = userData.avatar;
-}); */
+});
 
 /* -------------------------------------------------------------------------- */
 /*                      Avatar picture change popup form                      */
 /* -------------------------------------------------------------------------- */
 
-/* function handleAvatarImageServerSubmit() {
+function handleAvatarImageServerSubmit() {
   submitButtonChangeAvatar.textContent = "Saving...";
   api
     .updateProfilePicture({ avatar: avatarImageInput.value })
@@ -310,7 +309,7 @@ profileAvatarEditButton.addEventListener("click", () => {
   avatarImageFormValidator.toggleButtonState();
   avatarChangeFormPoup.open();
 });
-avatarChangeFormPoup.setEventListeners(); */
+avatarChangeFormPoup.setEventListeners();
 
 /* -------------------------------------------------------------------------- */
 /*                          Random API Fetch checkers                         */

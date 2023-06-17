@@ -27,7 +27,7 @@ export default class Card {
 
     this.cardIsLiked = this.cardIsLiked.bind(this);
   }
-  /* 
+
   handleCardTrashButton() {
     const cardTrashButton = this._element.querySelector(".card__trash-button");
 
@@ -36,7 +36,7 @@ export default class Card {
     }
   }
 
-    updateLike(result) {
+  updateLike(result) {
     this._cardLikes = result.likes;
     this.showCardLikes();
   }
@@ -58,7 +58,6 @@ export default class Card {
         .querySelector(".card__button")
         .classList.remove("card__like-active");
     }
-
   }
 
   cardIsLiked() {
@@ -66,7 +65,7 @@ export default class Card {
       return likes._id === this._userId;
     });
   }
- */
+
   _getTemplate() {
     return document
       .querySelector(this._cardSelector)

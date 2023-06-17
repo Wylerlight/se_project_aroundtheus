@@ -1,4 +1,4 @@
-/* import Popup from "./Popup.js";
+import Popup from "./Popup.js";
 
 export default class PopupCardDeleteVerify extends Popup {
   constructor(popupSelector, handleFormSubmit) {
@@ -29,4 +29,3 @@ export default class PopupCardDeleteVerify extends Popup {
     this._handleFormSubmit();
   }
 }
- */
