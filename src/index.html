@@ -105,7 +105,7 @@
       <section class="modal__container profile-container">
         <button class="modal__exit" type="button"></button>
         <h2 class="modal__title">Edit profile</h2>
-        <form class="modal__form profile-input">
+        <form class="modal__form profile-input" id="profile-input-form">
           <input
             id="modal-description-name"
             class="modal__field"
@@ -144,7 +144,7 @@
       <section class="modal__container card-container">
         <button class="modal__exit" type="button"></button>
         <h2 class="modal__title">New place</h2>
-        <form class="modal__form card-input">
+        <form class="modal__form card-input" id="new-card-form">
           <input
             id="modal-description-title"
             class="modal__field"
@@ -178,19 +178,21 @@
 
     <!-- DELETE CARD VERIFY MODAL -->
     <div class="modal card-delete-verify">
-      <form class="modal__container card-delete-container">
-        <button class="modal__exit" type="button"></button>
-        <h2 class="modal__title" id="modal-card-delete-verify-title">
-          Are you sure?
-        </h2>
-        <button
-          class="modal__button"
-          id="modal-verify-delete-card-button"
-          type="button"
-        >
-          Yes
-        </button>
-      </form>
+      <section class="modal__container">
+        <form class="modal__form card-delete-container">
+          <button class="modal__exit" type="button"></button>
+          <h2 class="modal__title" id="modal-card-delete-verify-title">
+            Are you sure?
+          </h2>
+          <button
+            class="modal__button"
+            id="modal-verify-delete-card-button"
+            type="button"
+          >
+            Yes
+          </button>
+        </form>
+      </section>
     </div>
 
     <!-- EDIT AVATAR PICTURE MODAL -->
@@ -199,7 +201,7 @@
       <section class="modal__container">
         <button class="modal__exit" type="button"></button>
         <h2 class="modal__title">Change profile picture</h2>
-        <form class="modal__form avatar__image-input">
+        <form class="modal__form avatar__image-input" id="avatar-form">
           <input
             id="modal-avatar-url"
             class="modal__field"

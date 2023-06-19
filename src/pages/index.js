@@ -1,3 +1,18 @@
+import {
+  profileEditButton,
+  profileModalContainer,
+  profileFormElement,
+  titleInput,
+  jobInput,
+  cardAddButton,
+  userProfileAvatar,
+  profileAvatarEditButton,
+  settings,
+  submitButtonEditProfileInfo,
+  submitButtonAddNewCard,
+  submitButtonChangeAvatar,
+  submitButtonDeleteCard,
+} from "../utils/constants.js";
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import Section from "../components/Section.js";
@@ -8,68 +23,6 @@ import PopupCardDeleteVerify from "../components/PopupCardDeleteVerify.js";
 import UserInfo from "../components/UserInfo.js";
 import Api from "../components/Api.js";
 import "./index.css";
-
-/* -------------------------------------------------------------------------- */
-/*                          Random API Fetch checkers                         */
-/* -------------------------------------------------------------------------- */
-
-/* fetch("https://around.nomoreparties.co/v1/group-12/cards", {
-  headers: {
-    authorization: "5e7676bf-611c-4ca9-9820-f740c8ee0732",
-    "Content-Type": "application/json",
-  },
-})
-  .then((result) => result.json())
-  .then((resp) => {
-    console.log(resp);
-  }); */
-
-/* -------------------------------------------------------------------------- */
-/*                       Constants : Temporary Placement                      */
-/* -------------------------------------------------------------------------- */
-
-const profileEditButton = document.querySelector(".profile__button-edit"); // edit button for profile info
-const profileModalContainer = document.querySelector(".profile-container");
-
-const profileFormElement =
-  profileModalContainer.querySelector(".profile-input"); // form wrapper for profile edit inputs
-
-const cardPopup = document.querySelector(".card-modal"); // wrapper for the entire new card modal
-const cardFormElement = cardPopup.querySelector(".card-input"); // form wrapper for new card inputs & submit button
-// const cardTrashButton = document.querySelector(".card__trash-button");
-
-const titleInput = profileFormElement.querySelector("#modal-description-name");
-const jobInput = profileFormElement.querySelector("#modal-description-job");
-const cardAddButton = document.querySelector(".profile__button-add");
-
-const userProfileAvatar = document.querySelector(".profile__avatar");
-
-const profileAvatarEditButton = document.querySelector(".profile__avatar-edit");
-const avatarChangeContainer = document.querySelector(".avatar__modal");
-const avatarFormElement = avatarChangeContainer.querySelector(
-  ".avatar__image-input"
-);
-
-const settings = {
-  inputSelector: ".modal__field",
-  submitButtonSelector: ".modal__button",
-  inactiveButtonClass: "modal__button_disabled",
-  inputErrorClass: "modal__field_type_error",
-  errorClass: "modal__error_visible",
-};
-
-/* -------------------------------------------------------------------------- */
-/*                            MODAL SUBMIT BUTTONS                            */
-/* -------------------------------------------------------------------------- */
-
-const submitButtonEditProfileInfo = document.querySelector(
-  "#modal-edit-profile-button"
-);
-const submitButtonAddNewCard = document.querySelector("#modal-add-card-button");
-
-const submitButtonChangeAvatar = document.querySelector(
-  "#modal-avatar-image-save"
-);
 
 /* -------------------------------------------------------------------------- */
 /*                                API Constant                                */
@@ -113,39 +66,6 @@ function handleCardClick(data) {
 }
 
 /* -------------------------------------------------------------------------- */
-/*                               Form Validators                              */
-/* -------------------------------------------------------------------------- */
-
-/* const editFormValidator = new FormValidator(settings, ".profile-input");
-editFormValidator.enableValidation();
-const addCardFormValidator = new FormValidator(settings, ".card-input");
-addCardFormValidator.enableValidation();
-
-const avatarImageFormValidator = new FormValidator(settings, avatarFormElement);
-avatarImageFormValidator.enableValidation(); */
-
-/* -------------------------------------------------------------------------- */
-/*                           New Form Validators                              */
-/* -------------------------------------------------------------------------- */
-
-const formValidators = {};
-console.log(formValidators);
-console.log(formValidators["modal__field"]);
-
-function validationEabling(settings) {
-  const formList = Array.from(
-    document.querySelectorAll(settings.inputSelector)
-  );
-  formList.forEach((element) => {
-    const validator = new FormValidator(settings, element);
-    const formName = element.getAttribute("id");
-    formValidators[formName] = validator;
-    validator.enableValidation();
-  });
-}
-validationEabling(settings);
-
-/* -------------------------------------------------------------------------- */
 /*              WORK SECTION BEGINS HERE FOR REVIEWER SUBMISSION              */
 /* -------------------------------------------------------------------------- */
 ////////////////////////////////////////////////////////////////////////////////
@@ -161,6 +81,23 @@ const classUserInfo = new UserInfo({
 });
 
 const cardSection = new Section({ renderer: renderCard }, ".cards");
+
+/* -------------------------------------------------------------------------- */
+/*                           New Form Validators                              */
+/* -------------------------------------------------------------------------- */
+
+const formValidators = {};
+
+function validationEabling(settings) {
+  const formList = Array.from(document.querySelectorAll(settings.formSelector));
+  formList.forEach((element) => {
+    const validator = new FormValidator(settings, element);
+    const formName = element.getAttribute("id");
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  });
+}
+validationEabling(settings);
 
 /* -------------------------------------------------------------------------- */
 /*    Initial page load: Setting User Information and Render Initial Cards    */
@@ -181,7 +118,7 @@ Promise.all([api.getUserInformation(), api.getInitialCards()])
 /* -------------------------------------------------------------------------- */
 
 function handleAvatarImageServerSubmit(data) {
-  submitButtonChangeAvatar.textContent = "Saving...";
+  avatarChangeFormPoup.renderLoading(data);
   api
     .updateProfilePicture(data)
     .then((response) => {
@@ -204,7 +141,7 @@ const avatarChangeFormPoup = new PopupWithForm(
 );
 
 profileAvatarEditButton.addEventListener("click", () => {
-  avatarImageFormValidator.toggleButtonState();
+  formValidators["avatar-form"].toggleButtonState();
   avatarChangeFormPoup.open();
 });
 avatarChangeFormPoup.setEventListeners();
@@ -214,7 +151,7 @@ avatarChangeFormPoup.setEventListeners();
 /* -------------------------------------------------------------------------- */
 
 function handleNewCardServerRenderSubmit(data) {
-  submitButtonAddNewCard.textContent = "Saving...";
+  newCardPopupForm.renderLoading(data);
   api
     .addNewCard(data)
     .then((cardData) => {
@@ -237,7 +174,7 @@ const newCardPopupForm = new PopupWithForm(
 );
 
 cardAddButton.addEventListener("click", () => {
-  addCardFormValidator.toggleButtonState();
+  formValidators["new-card-form"].toggleButtonState();
   newCardPopupForm.open();
 });
 newCardPopupForm.setEventListeners();
@@ -247,7 +184,7 @@ newCardPopupForm.setEventListeners();
 /* -------------------------------------------------------------------------- */
 
 function handleProfileFormSubmit(data) {
-  submitButtonEditProfileInfo.textContent = "Saving...";
+  profilePopupForm.renderLoading(data);
   api
     .editProfileInformation(data)
     .then((newUserData) => {
@@ -275,7 +212,7 @@ profileEditButton.addEventListener("click", () => {
 
   titleInput.value = userData.userName;
   jobInput.value = userData.userJobDescription;
-  editFormValidator.toggleButtonState();
+  formValidators["profile-input-form"].toggleButtonState();
   profilePopupForm.open();
 });
 
@@ -317,6 +254,8 @@ cardVerifyDelete.setEventListeners();
 
 function handleDeleteCard(cardId, element) {
   cardVerifyDelete.setSubmitAction(() => {
+    cardVerifyDelete.renderLoading(cardId);
+
     api
       .deleteCardRequest(cardId)
       .then(() => {
@@ -327,6 +266,9 @@ function handleDeleteCard(cardId, element) {
       })
       .catch((err) => {
         console.error(err);
+      })
+      .finally(() => {
+        submitButtonDeleteCard.textContent = "Yes";
       });
   });
 }
