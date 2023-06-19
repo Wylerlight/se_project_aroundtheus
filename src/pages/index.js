@@ -122,7 +122,7 @@ function handleAvatarImageServerSubmit(data) {
   api
     .updateProfilePicture(data)
     .then((response) => {
-      userProfileAvatar.src = response.avatar;
+      classUserInfo.setUserInfo(response);
     })
     .then(() => {
       avatarChangeFormPoup.close();
