@@ -131,7 +131,7 @@ function handleAvatarImageServerSubmit(data) {
       console.error(err);
     })
     .finally(() => {
-      submitButtonChangeAvatar.textContent = "Save";
+      avatarChangeFormPoup.renderLoading(false);
     });
 }
 
@@ -164,7 +164,7 @@ function handleNewCardServerRenderSubmit(data) {
       console.error(err);
     })
     .finally(() => {
-      submitButtonAddNewCard.textContent = "Create";
+      newCardPopupForm.renderLoading(false);
     });
 }
 
@@ -197,7 +197,7 @@ function handleProfileFormSubmit(data) {
       console.error(err);
     })
     .finally(() => {
-      submitButtonEditProfileInfo.textContent = "Save";
+      profilePopupForm.renderLoading(false);
     });
 }
 
@@ -268,7 +268,7 @@ function handleDeleteCard(cardId, element) {
         console.error(err);
       })
       .finally(() => {
-        submitButtonDeleteCard.textContent = "Yes";
+        cardVerifyDelete.renderLoading(false);
       });
   });
 }

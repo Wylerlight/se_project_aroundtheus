@@ -44,9 +44,6 @@ export default class Api {
       .then((result) => {
         return result;
       })
-      .catch((err) => {
-        console.error(err);
-      })
       .finally(() => {
         console.log("Done with getting initial cards");
       });
