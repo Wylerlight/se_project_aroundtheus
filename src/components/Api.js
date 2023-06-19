@@ -3,19 +3,42 @@ export default class Api {
     this._baseUrl = baseUrl;
     this._headers = headers;
   }
-  getAppInformation() {
-    return Promise.all([this.getInitialCards(), this.getUserInformation()]);
+
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Error: ${res.status}`);
+  }
+
+  getUserInformation() {
+    return fetch(`${this._baseUrl}/users/me`, { headers: this._headers })
+      .then(this._checkResponse)
+      .finally(() => {
+        console.log("Done with getting user info");
+      });
+  }
+
+  updateProfilePicture({ avatar }) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar,
+      }),
+    })
+      .then(this._checkResponse)
+      .then((result) => {
+        return result;
+      })
+      .finally(() => {
+        console.log("Done running Avatar change API");
+      });
   }
 
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, { headers: this._headers })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        // if the server returns an error, reject the promise
-        return Promise.reject(`Error: ${res.status}`);
-      })
+      .then(this._checkResponse)
       .then((result) => {
         return result;
       })
@@ -36,38 +59,12 @@ export default class Api {
         link,
       }),
     })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        // if the server returns an error, reject the promise
-        return Promise.reject(`Error: ${res.status}`);
-      })
+      .then(this._checkResponse)
       .then((response) => {
         return response;
       })
-      .catch((err) => {
-        console.error(err);
-      })
       .finally(() => {
         console.log("Done adding card from server to page");
-      });
-  }
-
-  getUserInformation() {
-    return fetch(`${this._baseUrl}/users/me`, { headers: this._headers })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        // if the server returns an error, reject the promise
-        return Promise.reject(`Error: ${res.status}`);
-      })
-      .catch((err) => {
-        console.error(err);
-      })
-      .finally(() => {
-        console.log("Done with getting user info");
       });
   }
 
@@ -80,18 +77,9 @@ export default class Api {
         about,
       }),
     })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        // if the server returns an error, reject the promise
-        return Promise.reject(`Error: ${res.status}`);
-      })
+      .then(this._checkResponse)
       .then((response) => {
         return response;
-      })
-      .catch((err) => {
-        console.error(err);
       })
       .finally(() => {
         console.log("Done sending user info to server");
@@ -103,16 +91,7 @@ export default class Api {
       method: "DELETE",
       headers: this._headers,
     })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        // if the server returns an error, reject the promise
-        return Promise.reject(`Error: ${res.status}`);
-      })
-      .catch((err) => {
-        console.error(err);
-      })
+      .then(this._checkResponse)
       .finally(() => {
         console.log("Done deleting card");
       });
@@ -123,18 +102,9 @@ export default class Api {
       method: "PUT",
       headers: this._headers,
     })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        // if the server returns an error, reject the promise
-        return Promise.reject(`Error: ${res.status}`);
-      })
+      .then(this._checkResponse)
       .then((result) => {
         return result;
-      })
-      .catch((err) => {
-        console.error(err);
       })
       .finally(() => {
         console.log("Done adding like");
@@ -146,47 +116,12 @@ export default class Api {
       method: "DELETE",
       headers: this._headers,
     })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        // if the server returns an error, reject the promise
-        return Promise.reject(`Error: ${res.status}`);
-      })
+      .then(this._checkResponse)
       .then((result) => {
         return result;
-      })
-      .catch((err) => {
-        console.error(err);
       })
       .finally(() => {
         console.log("Done deleting like");
-      });
-  }
-
-  updateProfilePicture({ avatar }) {
-    return fetch(`${this._baseUrl}/users/me/avatar`, {
-      method: "PATCH",
-      headers: this._headers,
-      body: JSON.stringify({
-        avatar,
-      }),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        // if the server returns an error, reject the promise
-        return Promise.reject(`Error: ${res.status}`);
-      })
-      .then((result) => {
-        return result;
-      })
-      .catch((err) => {
-        console.error(err);
-      })
-      .finally(() => {
-        console.log("Done running Avatar change API");
       });
   }
 }

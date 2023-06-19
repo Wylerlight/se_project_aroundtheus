@@ -1,14 +1,12 @@
-import Popup from "./Popup.js";
-
 export default class Card {
   constructor(
     data,
     cardSelector,
     handleCardClick,
     userId,
-    handleDeleteCard,
     handleCardLike,
-    updateLikes
+    cardTrashButtonVerify,
+    handleDeleteCard
   ) {
     this._userId = userId;
     this._cardId = data._id;
@@ -16,16 +14,16 @@ export default class Card {
     this._name = data.name;
     this._link = data.link;
     this._handleCardClick = handleCardClick;
-    this._handleDeleteCard = handleDeleteCard;
+    this._cardTrashButtonVerify = cardTrashButtonVerify;
 
     this._handleCardLike = handleCardLike;
     this._cardLikes = data.likes;
 
     this._cardSelector = cardSelector;
 
-    this._updateLikes = updateLikes;
-
     this.cardIsLiked = this.cardIsLiked.bind(this);
+
+    this._handleDeleteCard = handleDeleteCard;
   }
 
   handleCardTrashButton() {
@@ -75,10 +73,9 @@ export default class Card {
   _setEventListeners() {
     const cardLikeButton = this._element.querySelector(".card__button");
     const cardTrashButton = this._element.querySelector(".card__trash-button");
-    const verifyDeleteModal = new Popup(".card-delete-verify");
 
     cardTrashButton.addEventListener("click", () => {
-      verifyDeleteModal.open();
+      this._cardTrashButtonVerify();
       this._handleDeleteCard(this._cardId, this._element);
     });
 

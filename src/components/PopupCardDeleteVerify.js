@@ -15,10 +15,6 @@ export default class PopupCardDeleteVerify extends Popup {
     this._handleFormSubmit = action;
   }
 
-  close() {
-    super.close();
-  }
-
   setEventListeners() {
     super.setEventListeners();
 
