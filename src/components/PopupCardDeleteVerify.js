@@ -1,4 +1,4 @@
-/* import Popup from "./Popup.js";
+import Popup from "./Popup.js";
 
 export default class PopupCardDeleteVerify extends Popup {
   constructor(popupSelector, handleFormSubmit) {
@@ -9,14 +9,22 @@ export default class PopupCardDeleteVerify extends Popup {
     );
     this._handleFormSubmit = handleFormSubmit;
     this._handleSubmit = this._handleSubmit.bind(this);
+
+    this._popupForm = this._popupElement.querySelector(".modal__form");
+    this._submitButton = this._popupForm.querySelector(".modal__button");
+    this._submitButtonText = this._submitButton.textContent;
+  }
+
+  renderLoading(isLoading, loadingText = "Saving...") {
+    if (isLoading) {
+      this._submitButton.textContent = loadingText;
+    } else {
+      this._submitButton.textContent = this._submitButtonText;
+    }
   }
 
   setSubmitAction(action) {
     this._handleFormSubmit = action;
-  }
-
-  close() {
-    super.close();
   }
 
   setEventListeners() {
@@ -29,4 +37,3 @@ export default class PopupCardDeleteVerify extends Popup {
     this._handleFormSubmit();
   }
 }
- */

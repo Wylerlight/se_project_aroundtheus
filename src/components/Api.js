@@ -1,26 +1,48 @@
-/* export default class Api {
+export default class Api {
   constructor({ baseUrl, headers }) {
     this._baseUrl = baseUrl;
     this._headers = headers;
   }
-  getAppInformation() {
-    return Promise.all([this.getInitialCards(), this.getUserInformation()]);
+
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Error: ${res.status}`);
   }
 
-  getInitialCards() {
-    return fetch(`${this._baseUrl}/cards`, { headers: this._headers })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        // if the server returns an error, reject the promise
-        return Promise.reject(`Error: ${res.status}`);
-      })
+  _request(url, options) {
+    return fetch(url, options).then(this._checkResponse);
+  }
+
+  getUserInformation() {
+    return this._request(`${this._baseUrl}/users/me`, {
+      headers: this._headers,
+    }).finally(() => {
+      console.log("Done with getting user info");
+    });
+  }
+
+  updateProfilePicture({ avatar }) {
+    return this._request(`${this._baseUrl}/users/me/avatar`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar,
+      }),
+    })
       .then((result) => {
         return result;
       })
-      .catch((err) => {
-        console.error(err);
+      .finally(() => {
+        console.log("Done running Avatar change API");
+      });
+  }
+
+  getInitialCards() {
+    return this._request(`${this._baseUrl}/cards`, { headers: this._headers })
+      .then((result) => {
+        return result;
       })
       .finally(() => {
         console.log("Done with getting initial cards");
@@ -28,7 +50,7 @@
   }
 
   addNewCard({ name, link }) {
-    return fetch(`${this._baseUrl}/cards`, {
+    return this._request(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify({
@@ -36,43 +58,16 @@
         link,
       }),
     })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        // if the server returns an error, reject the promise
-        return Promise.reject(`Error: ${res.status}`);
-      })
       .then((response) => {
         return response;
-      })
-      .catch((err) => {
-        console.error(err);
       })
       .finally(() => {
         console.log("Done adding card from server to page");
       });
   }
 
-  getUserInformation() {
-    return fetch(`${this._baseUrl}/users/me`, { headers: this._headers })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        // if the server returns an error, reject the promise
-        return Promise.reject(`Error: ${res.status}`);
-      })
-      .catch((err) => {
-        console.error(err);
-      })
-      .finally(() => {
-        console.log("Done with getting user info");
-      });
-  }
-
   editProfileInformation({ name, about }) {
-    return fetch(`${this._baseUrl}/users/me`, {
+    return this._request(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
@@ -80,18 +75,8 @@
         about,
       }),
     })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        // if the server returns an error, reject the promise
-        return Promise.reject(`Error: ${res.status}`);
-      })
       .then((response) => {
         return response;
-      })
-      .catch((err) => {
-        console.error(err);
       })
       .finally(() => {
         console.log("Done sending user info to server");
@@ -99,42 +84,21 @@
   }
 
   deleteCardRequest(cardId) {
-    return fetch(`${this._baseUrl}/cards/${cardId}`, {
+    return this._request(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
       headers: this._headers,
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        // if the server returns an error, reject the promise
-        return Promise.reject(`Error: ${res.status}`);
-      })
-      .catch((err) => {
-        console.error(err);
-      })
-      .finally(() => {
-        console.log("Done deleting card");
-      });
+    }).finally(() => {
+      console.log("Done deleting card");
+    });
   }
 
   likesCountAdd(cardId) {
-    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+    return this._request(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: "PUT",
       headers: this._headers,
     })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        // if the server returns an error, reject the promise
-        return Promise.reject(`Error: ${res.status}`);
-      })
       .then((result) => {
         return result;
-      })
-      .catch((err) => {
-        console.error(err);
       })
       .finally(() => {
         console.log("Done adding like");
@@ -142,55 +106,19 @@
   }
 
   likesCountRemove(cardId) {
-    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+    return this._request(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: "DELETE",
       headers: this._headers,
     })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        // if the server returns an error, reject the promise
-        return Promise.reject(`Error: ${res.status}`);
-      })
       .then((result) => {
         return result;
-      })
-      .catch((err) => {
-        console.error(err);
       })
       .finally(() => {
         console.log("Done deleting like");
       });
   }
-
-  updateProfilePicture({ avatar }) {
-    return fetch(`${this._baseUrl}/users/me/avatar`, {
-      method: "PATCH",
-      headers: this._headers,
-      body: JSON.stringify({
-        avatar,
-      }),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        // if the server returns an error, reject the promise
-        return Promise.reject(`Error: ${res.status}`);
-      })
-      .then((result) => {
-        return result;
-      })
-      .catch((err) => {
-        console.error(err);
-      })
-      .finally(() => {
-        console.log("Done running Avatar change API");
-      });
-  }
 }
-*/
+
 /* -------------------------------------------------------------------------- */
 /*                example of what it will look like in index.js               */
 /* -------------------------------------------------------------------------- */
