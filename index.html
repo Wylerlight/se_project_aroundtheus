@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Around the U.S.</title>
+    <!-- <link rel="stylesheet" href="./pages/index.css" /> -->
+  </head>
+  <body class="page">
+    <div class="page__content">
+      <header class="header page__section">
+        <img
+          src="<%=require('./images/around-logo.svg')%>"
+          alt="Around logo"
+          class="header__logo"
+        />
+      </header>
+      <main class="content">
+        <section class="profile page__section">
+          <div class="profile__avatar-conatainer">
+            <img src="" alt="" class="profile__avatar" />
+            <button class="profile__avatar-edit" type="button"></button>
+          </div>
+          <div class="profile__info">
+            <h1 class="profile__title"></h1>
+            <button class="profile__button-edit" type="button"></button>
+            <p class="profile__description"></p>
+          </div>
+          <button class="profile__button-add" type="button"></button>
+        </section>
+
+        <section class="cards page__section">
+          <!-- <article class="card">
+            <img
+              src="./images/yosemite.jpg"
+              alt="Yosemite Valley"
+              class="card__image"
+            />
+            <div class="card__wrapper">
+              <h2 class="card__title">Yosemite Valley</h2>
+              <button class="card__button" type="button"></button>
+            </div>
+          </article>
+          <article class="card">
+            <img
+              src="./images/lake-louise.jpg"
+              alt="Lake Louise"
+              class="card__image"
+            />
+            <div class="card__wrapper">
+              <h2 class="card__title">Lake Louise</h2>
+              <button class="card__button" type="button"></button>
+            </div>
+          </article>
+          <article class="card">
+            <img
+              src="./images/bald-mountains.jpg"
+              alt="Bald Mountains"
+              class="card__image"
+            />
+            <div class="card__wrapper">
+              <h2 class="card__title">Bald Mountains</h2>
+              <button class="card__button" type="button"></button>
+            </div>
+          </article>
+          <article class="card">
+            <img src="./images/latemar.jpg" alt="Latemar" class="card__image" />
+            <div class="card__wrapper">
+              <h2 class="card__title">Latemar</h2>
+              <button class="card__button" type="button"></button>
+            </div>
+          </article>
+          <article class="card">
+            <img
+              src="./images/vanoise.jpg"
+              alt="Vanoise National"
+              class="card__image"
+            />
+            <div class="card__wrapper">
+              <h2 class="card__title">Vanoise National Park</h2>
+              <button class="card__button" type="button"></button>
+            </div>
+          </article>
+          <article class="card">
+            <img
+              src="./images/lago.jpg"
+              alt="Lago di Braies"
+              class="card__image"
+            />
+            <div class="card__wrapper">
+              <h2 class="card__title">Lago di Braies</h2>
+              <button class="card__button" type="button"></button>
+            </div>
+          </article> -->
+        </section>
+        <footer class="footer">
+          <p class="footer__copyright">&copy; 2023 Around the U.S.</p>
+        </footer>
+      </main>
+    </div>
+
+    <!-- EDIT MODAL -->
+    <div class="modal profile-modal">
+      <section class="modal__container profile-container">
+        <button class="modal__exit" type="button"></button>
+        <h2 class="modal__title">Edit profile</h2>
+        <form class="modal__form profile-input">
+          <input
+            id="modal-description-name"
+            class="modal__field"
+            name="title"
+            type="text"
+            placeholder="Name"
+            minlength="2"
+            maxlength="40"
+            required
+          />
+          <span class="modal-description-name-error"></span>
+          <input
+            id="modal-description-job"
+            class="modal__field"
+            name="job"
+            type="text"
+            placeholder="Description"
+            minlength="2"
+            maxlength="200"
+            required
+          />
+          <span class="modal-description-job-error"></span>
+          <button
+            class="modal__button"
+            id="modal-edit-profile-button"
+            type="submit"
+          >
+            Save
+          </button>
+        </form>
+      </section>
+    </div>
+
+    <!-- ADD CARD MODAL -->
+    <div class="modal card-modal">
+      <section class="modal__container card-container">
+        <button class="modal__exit" type="button"></button>
+        <h2 class="modal__title">New place</h2>
+        <form class="modal__form card-input">
+          <input
+            id="modal-description-title"
+            class="modal__field"
+            name="name"
+            type="text"
+            placeholder="Title"
+            minlength="1"
+            maxlength="30"
+            required
+          />
+          <span class="modal-description-title-error"></span>
+          <input
+            id="modal-description-url"
+            class="modal__field"
+            name="link"
+            type="url"
+            placeholder="Image link"
+            required
+          />
+          <span class="modal-description-url-error"></span>
+          <button
+            class="modal__button card-submit-button"
+            id="modal-add-card-button"
+            type="submit"
+          >
+            Create
+          </button>
+        </form>
+      </section>
+    </div>
+
+    <!-- DELETE CARD VERIFY MODAL -->
+    <!--     <div class="modal card-delete-verify">
+      <form class="modal__container card-delete-container">
+        <button class="modal__exit" type="button"></button>
+        <h2 class="modal__title" id="modal-card-delete-verify-title">
+          Are you sure?
+        </h2>
+        <button
+          class="modal__button"
+          id="modal-verify-delete-card-button"
+          type="submit"
+        >
+          Yes
+        </button>
+      </form>
+    </div>
+ -->
+    <!-- EDIT AVATAR PICTURE MODAL -->
+
+    <!--     <div class="modal avatar__modal">
+      <section class="modal__container">
+        <button class="modal__exit" type="button"></button>
+        <h2 class="modal__title">Change profile picture</h2>
+        <form class="modal__form avatar__image-input">
+          <input
+            id="modal-avatar-url"
+            class="modal__field"
+            name="avatar"
+            type="url"
+            placeholder="Image link"
+            required
+          />
+          <span class="modal-avatar-url-error"></span>
+          <button
+            class="modal__button"
+            id="modal-avatar-image-save"
+            type="submit"
+          >
+            Save
+          </button>
+        </form>
+      </section>
+    </div>
+ -->
+    <!-- Image Popup -->
+    <div class="modal image">
+      <section class="image__container">
+        <button class="modal__exit"></button>
+        <img class="image__main" src="#" alt="#" />
+        <p class="image__description"></p>
+      </section>
+    </div>
+
+    <template id="card-template">
+      <article class="card">
+        <button class="card__trash-button" type="button"></button>
+        <img class="card__image" src="#" alt="#" />
+        <div class="card__wrapper">
+          <h2 class="card__title"></h2>
+          <div class="card__like-container">
+            <button class="card__button" type="button"></button>
+            <p class="card__like-counter"></p>
+          </div>
+        </div>
+      </article>
+    </template>
+    <!-- <script type="module" src="./pages/index.js" defer></script> -->
+    <!-- <script type="module" src="./components/Card.js" defer></script> -->
+    <!-- <script type="module" src="./components/FormValidator.js" defer></script> -->
+  </body>
+</html>
