@@ -14,7 +14,7 @@
   margin-left: 30px;
 }
 
-/* .profile__avatar-conatainer {
+.profile__avatar-conatainer {
   position: relative;
 }
 
@@ -46,7 +46,7 @@
 }
 .profile__avatar-conatainer:hover .profile__avatar {
   opacity: 0.2;
-} */
+}
 
 .profile__title {
   font-family: "Inter", Arial, Helvetica, sans-serif;
