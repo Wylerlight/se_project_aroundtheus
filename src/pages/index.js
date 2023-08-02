@@ -12,26 +12,26 @@ import {
   submitButtonAddNewCard,
   submitButtonChangeAvatar,
   submitButtonDeleteCard,
-} from "../utils/constants.js";
-import Card from "../components/Card.js";
-import FormValidator from "../components/FormValidator.js";
-import Section from "../components/Section.js";
-import Popup from "../components/Popup.js";
-import PopupWithImage from "../components/PopupWithImage.js";
-import PopupWithForm from "../components/PopupWithForm.js";
-import PopupCardDeleteVerify from "../components/PopupCardDeleteVerify.js";
-import UserInfo from "../components/UserInfo.js";
-import Api from "../components/Api.js";
-import "./index.css";
+} from '../utils/constants.js';
+import Card from '../components/Card.js';
+import FormValidator from '../components/FormValidator.js';
+import Section from '../components/Section.js';
+import Popup from '../components/Popup.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import PopupCardDeleteVerify from '../components/PopupCardDeleteVerify.js';
+import UserInfo from '../components/UserInfo.js';
+import Api from '../components/Api.js';
+import './index.css';
 
 /* -------------------------------------------------------------------------- */
 /*                                API Constant                                */
 /* -------------------------------------------------------------------------- */
 const api = new Api({
-  baseUrl: "https://around.nomoreparties.co/v1/group-12",
+  baseUrl: 'https://around.nomoreparties.co/v1/group-12',
   headers: {
-    authorization: "5e7676bf-611c-4ca9-9820-f740c8ee0732",
-    "Content-Type": "application/json",
+    authorization: '5e7676bf-611c-4ca9-9820-f740c8ee0732',
+    'Content-Type': 'application/json',
   },
 });
 
@@ -44,7 +44,7 @@ let userId;
 const renderCard = (item) => {
   const addNewCard = new Card(
     item,
-    "#card-template",
+    '#card-template',
     handleCardClick,
     userId,
     handleCardLike,
@@ -58,7 +58,7 @@ const renderCard = (item) => {
 /* -------------------------------------------------------------------------- */
 /*                              Popup Card Image                              */
 /* -------------------------------------------------------------------------- */
-const imagePopup = new PopupWithImage(".image");
+const imagePopup = new PopupWithImage('.image');
 imagePopup.setEventListeners();
 
 function handleCardClick(data) {
@@ -75,12 +75,12 @@ function handleCardClick(data) {
 /* -------------------------------------------------------------------------- */
 
 const classUserInfo = new UserInfo({
-  userNameSelector: ".profile__title",
-  userJobSelector: ".profile__description",
-  userAvatarSelector: ".profile__avatar",
+  userNameSelector: '.profile__title',
+  userJobSelector: '.profile__description',
+  userAvatarSelector: '.profile__avatar',
 });
 
-const cardSection = new Section({ renderer: renderCard }, ".cards");
+const cardSection = new Section({ renderer: renderCard }, '.cards');
 
 /* -------------------------------------------------------------------------- */
 /*                           New Form Validators                              */
@@ -92,7 +92,7 @@ function validationEabling(settings) {
   const formList = Array.from(document.querySelectorAll(settings.formSelector));
   formList.forEach((element) => {
     const validator = new FormValidator(settings, element);
-    const formName = element.getAttribute("id");
+    const formName = element.getAttribute('id');
     formValidators[formName] = validator;
     validator.enableValidation();
   });
@@ -136,12 +136,12 @@ function handleAvatarImageServerSubmit(data) {
 }
 
 const avatarChangeFormPoup = new PopupWithForm(
-  ".avatar__modal",
+  '.avatar__modal',
   handleAvatarImageServerSubmit
 );
 
-profileAvatarEditButton.addEventListener("click", () => {
-  formValidators["avatar-form"].toggleButtonState();
+profileAvatarEditButton.addEventListener('click', () => {
+  formValidators['avatar-form'].toggleButtonState();
   avatarChangeFormPoup.open();
 });
 avatarChangeFormPoup.setEventListeners();
@@ -169,12 +169,12 @@ function handleNewCardServerRenderSubmit(data) {
 }
 
 const newCardPopupForm = new PopupWithForm(
-  ".card-modal",
+  '.card-modal',
   handleNewCardServerRenderSubmit
 );
 
-cardAddButton.addEventListener("click", () => {
-  formValidators["new-card-form"].toggleButtonState();
+cardAddButton.addEventListener('click', () => {
+  formValidators['new-card-form'].toggleButtonState();
   newCardPopupForm.open();
 });
 newCardPopupForm.setEventListeners();
@@ -202,17 +202,17 @@ function handleProfileFormSubmit(data) {
 }
 
 const profilePopupForm = new PopupWithForm(
-  ".profile-modal",
+  '.profile-modal',
   handleProfileFormSubmit
 );
 profilePopupForm.setEventListeners();
 
-profileEditButton.addEventListener("click", () => {
+profileEditButton.addEventListener('click', () => {
   const userData = classUserInfo.getUserInfo();
 
   titleInput.value = userData.userName;
   jobInput.value = userData.userJobDescription;
-  formValidators["profile-input-form"].toggleButtonState();
+  formValidators['profile-input-form'].toggleButtonState();
   profilePopupForm.open();
 });
 
@@ -247,7 +247,7 @@ function handleCardLike(card) {
 /* -------------------------------------------------------------------------- */
 
 const cardVerifyDelete = new PopupCardDeleteVerify(
-  ".card-delete-verify",
+  '.card-delete-verify',
   handleDeleteCard
 );
 cardVerifyDelete.setEventListeners();
